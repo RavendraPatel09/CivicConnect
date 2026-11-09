@@ -33,7 +33,7 @@ class User(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc), nullable=False)
 
     # Relationships
-    department: Mapped[Optional["Department"]] = relationship("Department", back_populates="staff_members")
+    department: Mapped[Optional["Department"]] = relationship("Department", back_populates="staff_members", lazy="selectin")
     tickets: Mapped[List["Ticket"]] = relationship("Ticket", back_populates="user", foreign_keys="[Ticket.user_id]")
     assigned_tickets: Mapped[List["Ticket"]] = relationship("Ticket", back_populates="assigned_staff", foreign_keys="[Ticket.assigned_staff_id]")
     upvotes: Mapped[List["Upvote"]] = relationship("Upvote", back_populates="user", cascade="all, delete-orphan")

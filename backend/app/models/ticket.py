@@ -78,10 +78,10 @@ class Ticket(Base):
     resolved_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
 
     # Relationships
-    user: Mapped["User"] = relationship("User", back_populates="tickets", foreign_keys=[user_id])
-    assigned_staff: Mapped[Optional["User"]] = relationship("User", back_populates="assigned_tickets", foreign_keys=[assigned_staff_id])
-    department: Mapped[Optional["Department"]] = relationship("Department", back_populates="tickets")
-    events: Mapped[List["TicketEvent"]] = relationship("TicketEvent", back_populates="ticket", cascade="all, delete-orphan", order_by="TicketEvent.created_at.asc()")
+    user: Mapped["User"] = relationship("User", back_populates="tickets", foreign_keys=[user_id], lazy="selectin")
+    assigned_staff: Mapped[Optional["User"]] = relationship("User", back_populates="assigned_tickets", foreign_keys=[assigned_staff_id], lazy="selectin")
+    department: Mapped[Optional["Department"]] = relationship("Department", back_populates="tickets", lazy="selectin")
+    events: Mapped[List["TicketEvent"]] = relationship("TicketEvent", back_populates="ticket", cascade="all, delete-orphan", order_by="TicketEvent.created_at.asc()", lazy="selectin")
     upvotes: Mapped[List["Upvote"]] = relationship("Upvote", back_populates="ticket", cascade="all, delete-orphan")
     notifications: Mapped[List["Notification"]] = relationship("Notification", back_populates="ticket", cascade="all, delete-orphan")
-    embedding: Mapped[Optional["TicketEmbedding"]] = relationship("TicketEmbedding", back_populates="ticket", uselist=False, cascade="all, delete-orphan")
+    embedding: Mapped[Optional["TicketEmbedding"]] = relationship("TicketEmbedding", back_populates="ticket", uselist=False, cascade="all, delete-orphan", lazy="selectin")
