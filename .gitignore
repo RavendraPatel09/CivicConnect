@@ -1,6 +1,14 @@
 node_modules/
 dist/
 coverage/
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+uploads/
+*.py[cod]
+*.db
 .env
 .env.*
 !.env.example
