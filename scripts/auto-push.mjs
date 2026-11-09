@@ -8,6 +8,7 @@ const execFileAsync = promisify(execFile);
 const projectRoot = fileURLToPath(new URL("../", import.meta.url));
 const watchedPaths = [
   ".gitignore",
+  "docker-compose.yml",
   "index.html",
   "package.json",
   "package-lock.json",
@@ -18,10 +19,32 @@ const watchedPaths = [
   "vite.config.ts",
   "src/",
   "public/",
+  "README.md",
+  "docs/",
+  ".github/",
+  "backend/app/",
+  "backend/alembic/",
+  "backend/tests/",
+  "backend/.env.example",
+  "backend/Dockerfile",
+  "backend/requirements.txt",
+  "backend/alembic.ini",
+  "backend/pytest.ini",
   ".vscode/tasks.json",
   "scripts/auto-push.mjs",
 ];
-const ignoredPathParts = new Set([".git", "node_modules", "dist", "coverage"]);
+const ignoredPathParts = new Set([
+  ".git",
+  "node_modules",
+  "dist",
+  "coverage",
+  ".venv",
+  "venv",
+  "__pycache__",
+  ".pytest_cache",
+  ".mypy_cache",
+  "uploads",
+]);
 
 let debounceTimer;
 let running = false;
@@ -29,8 +52,13 @@ let rerunRequested = false;
 
 function isWatchedPath(filename) {
   const normalized = filename.replaceAll("\\", "/");
+  const pathParts = normalized.split("/");
   if (
-    normalized.split("/").some((part) => ignoredPathParts.has(part)) ||
+    pathParts.some(
+      (part) =>
+        ignoredPathParts.has(part) ||
+        (part.startsWith(".env") && part !== ".env.example"),
+    ) ||
     normalized.endsWith(".log") ||
     normalized.endsWith("~") ||
     normalized.includes("/.env")
@@ -165,6 +193,7 @@ try {
   watchDirectory("public", true);
   watchDirectory(".vscode", false);
   watchDirectory("scripts", false);
+  watchDirectory(".github", true);
   console.log("Watching project code and assets; changes push after 1.5 seconds of inactivity.");
   scheduleCommit();
 } catch (error) {
