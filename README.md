@@ -32,6 +32,7 @@ The backend is under active development. Its API design and frontend integration
 Requirements: Node.js 18 or newer and npm.
 
 ```bash
+cd frontend
 npm ci
 npm run dev
 ```
@@ -56,7 +57,7 @@ The SQLite URL above is for local development. For PostgreSQL, set `DATABASE_URL
 
 ## Useful commands
 
-Run these commands from the repository root:
+Run these commands from `frontend/`:
 
 | Command | Purpose |
 | --- | --- |
@@ -74,7 +75,7 @@ pytest
 
 ## Configuration
 
-The frontend API client uses `/api/v1` by default. To point it at a different backend, set `VITE_API_BASE_URL` in a local Vite environment file, for example:
+The frontend API client uses `/api/v1` by default. To point it at a different backend, set `VITE_API_BASE_URL` in `frontend/.env.local`, for example:
 
 ```dotenv
 VITE_API_BASE_URL=http://127.0.0.1:8000/api/v1
@@ -85,6 +86,16 @@ The backend reads settings such as `DATABASE_URL`, `SECRET_KEY`, and `GEMINI_API
 ## Project layout
 
 ```text
+frontend/
+  public/        Static assets
+  src/
+    components/  Shared interface components
+    contexts/    Authentication, notifications, and theme state
+    pages/       Public, resident, and administrative screens
+    services/    API clients and demo data services
+    styles/      Global styles
+  package.json
+  vite.config.ts
 backend/
   alembic/       Database migration environment and revisions
   app/
@@ -92,15 +103,17 @@ backend/
     models/      SQLAlchemy data models
     main.py      FastAPI application and health endpoints
   tests/         Backend tests
+  Dockerfile     Backend container image
+  .dockerignore  Excludes local files from the build context
   requirements.txt
 docs/
   API_INTEGRATION_PLAN.md
-src/
-  components/    Shared interface components
-  contexts/      Authentication, notifications, and theme state
-  pages/         Public, resident, and administrative screens
-  services/      API clients and demo data services
-  styles/        Global styles
+.github/
+  workflows/     CI checks for frontend and backend
+.vscode/
+  tasks.json     Local auto-push task
+scripts/
+  auto-push.mjs  Saved-change commit and push watcher
 ```
 
 ## Saved-change publishing

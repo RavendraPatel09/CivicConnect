@@ -3,8 +3,8 @@
   "tasks": [
     {
       "label": "Auto-push CivicConnect changes",
-      "type": "npm",
-      "script": "auto-push",
+      "type": "shell",
+      "command": "node scripts/auto-push.mjs",
       "isBackground": true,
       "problemMatcher": [],
       "runOptions": {

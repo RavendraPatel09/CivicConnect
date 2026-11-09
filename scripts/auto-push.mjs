@@ -9,16 +9,7 @@ const projectRoot = fileURLToPath(new URL("../", import.meta.url));
 const watchedPaths = [
   ".gitignore",
   "docker-compose.yml",
-  "index.html",
-  "package.json",
-  "package-lock.json",
-  "postcss.config.js",
-  "tailwind.config.js",
-  "tsconfig.json",
-  "tsconfig.node.json",
-  "vite.config.ts",
-  "src/",
-  "public/",
+  "frontend/",
   "README.md",
   "docs/",
   ".github/",
@@ -26,6 +17,7 @@ const watchedPaths = [
   "backend/alembic/",
   "backend/tests/",
   "backend/.env.example",
+  "backend/.dockerignore",
   "backend/Dockerfile",
   "backend/requirements.txt",
   "backend/alembic.ini",
@@ -60,8 +52,7 @@ function isWatchedPath(filename) {
         (part.startsWith(".env") && part !== ".env.example"),
     ) ||
     normalized.endsWith(".log") ||
-    normalized.endsWith("~") ||
-    normalized.includes("/.env")
+    normalized.endsWith("~")
   ) {
     return false;
   }
@@ -88,7 +79,7 @@ async function git(args) {
 function formatCommitMessage(files) {
   if (files.length === 1) {
     const [file] = files;
-    const page = file.match(/^src\/pages\/([^/]+)\/(.+)\.[^.]+$/);
+    const page = file.match(/^frontend\/src\/pages\/([^/]+)\/(.+)\.[^.]+$/);
     if (page) {
       const title = path
         .basename(page[2])
@@ -125,11 +116,11 @@ function formatCommitMessage(files) {
       return "docs: update project documentation";
     }
 
-    const area = file.startsWith("src/components/")
+    const area = file.startsWith("frontend/src/components/")
       ? "ui"
-      : file.startsWith("src/services/")
+      : file.startsWith("frontend/src/services/")
         ? "api"
-        : file.startsWith("src/")
+        : file.startsWith("frontend/src/")
           ? "core"
           : "project";
     const title = path
@@ -151,10 +142,10 @@ function formatCommitMessage(files) {
   if (files.every((file) => file.startsWith("docs/") || file === "README.md")) {
     return "docs: update project guides";
   }
-  if (files.every((file) => file.startsWith("src/pages/"))) {
+  if (files.every((file) => file.startsWith("frontend/src/pages/"))) {
     return "feat(app): update application pages";
   }
-  if (files.every((file) => file.startsWith("src/"))) {
+  if (files.every((file) => file.startsWith("frontend/src/"))) {
     return "chore(app): update shared application code";
   }
   return "chore(project): update application and project files";
@@ -251,8 +242,9 @@ function watchDirectory(relativeDirectory, recursive) {
 
 try {
   watchDirectory(".", false);
-  watchDirectory("src", true);
-  watchDirectory("public", true);
+  watchDirectory("frontend", true);
+  watchDirectory("backend", true);
+  watchDirectory("docs", true);
   watchDirectory(".vscode", false);
   watchDirectory("scripts", false);
   watchDirectory(".github", true);

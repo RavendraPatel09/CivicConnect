@@ -12,7 +12,7 @@ CivicConnect AI is a smart-city civic grievance management platform connecting c
 * **Core Framework**: React 18, TypeScript, Vite 5, Tailwind CSS
 * **Routing**: React Router v6 with lazy-loaded route chunks
 * **State & Query Management**: TanStack React Query v5 + Context API (`AuthContext`, `ThemeContext`, `NotificationContext`)
-* **Form Handling & Validation**: React Hook Form with Zod schemas ([`src/schemas/index.ts`](file:///Users/ravendrapatel/Documents/CivicConnect/src/schemas/index.ts))
+* **Form Handling & Validation**: React Hook Form with Zod schemas ([`frontend/src/schemas/index.ts`](../frontend/src/schemas/index.ts))
 * **Visualizations & Maps**: Recharts (Monthly Trends, Category Bar Charts, Severity Donut) and Leaflet with custom SVG markers
 * **HTTP Client**: Axios instance in [`src/services/api/client.ts`](file:///Users/ravendrapatel/Documents/CivicConnect/src/services/api/client.ts) configured with `VITE_API_BASE_URL` and Bearer token interceptor
 
@@ -201,6 +201,6 @@ CivicConnect AI is a smart-city civic grievance management platform connecting c
 ## 6. Mock Service Replacement Strategy
 
 1. **Keep Component Signatures Identical**: Frontend UI components call `authApi`, `ticketsApi`, `analyticsApi`, and `notificationsApi`. The methods and return types will remain strictly matched.
-2. **Transparent Adaptation**: The API services (`src/services/api/*.ts`) will call real backend REST endpoints when `VITE_API_BASE_URL` is configured or fallback gracefully when in demo mode.
+2. **Transparent Adaptation**: The API services (`frontend/src/services/api/*.ts`) will call real backend REST endpoints when `VITE_API_BASE_URL` is configured or fallback gracefully when in demo mode.
 3. **Data Normalization Layer**: Backend snake_case JSON fields (e.g. `priority_score`, `assigned_staff_name`) will be mapped transparently to the camelCase models (`priorityScore`, `assignedStaffName`) expected by React components.
-4. **WebSocket Service**: Introduce `src/services/websocket/socketService.ts` to attach to existing tickets and invalidate TanStack Query cache automatically.
+4. **WebSocket Service**: Introduce `frontend/src/services/websocket/socketService.ts` to attach to existing tickets and invalidate TanStack Query cache automatically.
