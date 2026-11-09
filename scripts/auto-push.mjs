@@ -57,6 +57,37 @@ async function git(args) {
   return stdout.trim();
 }
 
+function formatCommitMessage(files) {
+  if (files.length > 1) {
+    return `chore(auto-push): update ${files.length} project files`;
+  }
+
+  const [file] = files;
+  const page = file.match(/^src\/pages\/([^/]+)\/(.+)\.[^.]+$/);
+  if (page) {
+    const title = page[2]
+      .split("/")
+      .at(-1)
+      .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+      .replace(/\s+/g, " ")
+      .toLowerCase();
+    return `feat(${page[1]}): update ${title}`;
+  }
+
+  const area = file.startsWith("src/components/")
+    ? "ui"
+    : file.startsWith("src/services/")
+      ? "api"
+      : file.startsWith("src/")
+        ? "core"
+        : "project";
+  const title = path
+    .basename(file, path.extname(file))
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .toLowerCase();
+  return `chore(${area}): update ${title}`;
+}
+
 async function commitAndPush() {
   if (running) {
     rerunRequested = true;
@@ -79,10 +110,7 @@ async function commitAndPush() {
     }
 
     const files = stagedFiles.split("\n");
-    const message =
-      files.length === 1
-        ? `chore(auto-push): update ${files[0]}`
-        : `chore(auto-push): update ${files.length} project files`;
+    const message = formatCommitMessage(files);
 
     await git(["commit", "-m", message]);
     await git(["push", "origin", "HEAD"]);
@@ -138,6 +166,7 @@ try {
   watchDirectory(".vscode", false);
   watchDirectory("scripts", false);
   console.log("Watching project code and assets; changes push after 1.5 seconds of inactivity.");
+  scheduleCommit();
 } catch (error) {
   console.error(
     `Could not start auto-push watcher: ${error instanceof Error ? error.message : String(error)}`,
