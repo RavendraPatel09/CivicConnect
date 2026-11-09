@@ -60,7 +60,7 @@ export const ProfilePage: React.FC = () => {
             <Input
               label="Full Name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
               leftIcon={<User className="w-4 h-4" />}
             />
 
@@ -75,7 +75,7 @@ export const ProfilePage: React.FC = () => {
             <Input
               label="Phone Number"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
               leftIcon={<Phone className="w-4 h-4" />}
             />
 
