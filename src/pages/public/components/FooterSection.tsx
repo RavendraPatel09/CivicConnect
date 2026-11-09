@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../../../common/Logo';
+import Logo from '../../../components/common/Logo';
 import { ShieldCheck, Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
 
 export const FooterSection: React.FC = () => {
