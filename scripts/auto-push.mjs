@@ -86,34 +86,78 @@ async function git(args) {
 }
 
 function formatCommitMessage(files) {
-  if (files.length > 1) {
-    return `chore(auto-push): update ${files.length} project files`;
-  }
+  if (files.length === 1) {
+    const [file] = files;
+    const page = file.match(/^src\/pages\/([^/]+)\/(.+)\.[^.]+$/);
+    if (page) {
+      const title = path
+        .basename(page[2])
+        .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+        .toLowerCase();
+      return `feat(${page[1]}): update ${title}`;
+    }
 
-  const [file] = files;
-  const page = file.match(/^src\/pages\/([^/]+)\/(.+)\.[^.]+$/);
-  if (page) {
-    const title = page[2]
-      .split("/")
-      .at(-1)
+    if (file === "README.md") {
+      return "docs: update the project README";
+    }
+    if (file.startsWith("backend/alembic/")) {
+      return "db: update database migrations";
+    }
+    if (file.startsWith("backend/tests/")) {
+      return "test(backend): update backend coverage";
+    }
+    if (file.startsWith("backend/app/core/security")) {
+      return "feat(auth): update backend security utilities";
+    }
+    if (file.startsWith("backend/app/")) {
+      return "feat(api): update backend application";
+    }
+    if (file.startsWith("backend/")) {
+      return "build(backend): update backend configuration";
+    }
+    if (file.startsWith(".github/")) {
+      return "ci: update GitHub Actions workflow";
+    }
+    if (file === "docker-compose.yml" || file.endsWith("/Dockerfile")) {
+      return "build: update local container setup";
+    }
+    if (file.startsWith("docs/")) {
+      return "docs: update project documentation";
+    }
+
+    const area = file.startsWith("src/components/")
+      ? "ui"
+      : file.startsWith("src/services/")
+        ? "api"
+        : file.startsWith("src/")
+          ? "core"
+          : "project";
+    const title = path
+      .basename(file, path.extname(file))
       .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-      .replace(/\s+/g, " ")
       .toLowerCase();
-    return `feat(${page[1]}): update ${title}`;
+    return `chore(${area}): update ${title}`;
   }
 
-  const area = file.startsWith("src/components/")
-    ? "ui"
-    : file.startsWith("src/services/")
-      ? "api"
-      : file.startsWith("src/")
-        ? "core"
-        : "project";
-  const title = path
-    .basename(file, path.extname(file))
-    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-    .toLowerCase();
-  return `chore(${area}): update ${title}`;
+  if (files.every((file) => file.startsWith("backend/alembic/"))) {
+    return "db: update database migrations";
+  }
+  if (files.every((file) => file.startsWith("backend/tests/"))) {
+    return "test(backend): update backend test coverage";
+  }
+  if (files.every((file) => file.startsWith("backend/"))) {
+    return "feat(backend): update API, security, and data models";
+  }
+  if (files.every((file) => file.startsWith("docs/") || file === "README.md")) {
+    return "docs: update project guides";
+  }
+  if (files.every((file) => file.startsWith("src/pages/"))) {
+    return "feat(app): update application pages";
+  }
+  if (files.every((file) => file.startsWith("src/"))) {
+    return "chore(app): update shared application code";
+  }
+  return "chore(project): update application and project files";
 }
 
 async function commitAndPush() {
@@ -131,7 +175,25 @@ async function commitAndPush() {
       );
     }
 
-    await git(["add", "-A", "--", ...watchedPaths]);
+    const existingPaths = [];
+    for (const watchedPath of watchedPaths) {
+      const trackedOrUntracked = await git([
+        "ls-files",
+        "--cached",
+        "--others",
+        "--exclude-standard",
+        "--",
+        watchedPath,
+      ]);
+      if (trackedOrUntracked) {
+        existingPaths.push(watchedPath);
+      }
+    }
+    if (existingPaths.length === 0) {
+      return;
+    }
+
+    await git(["add", "-A", "--", ...existingPaths]);
     const stagedFiles = await git(["diff", "--cached", "--name-only"]);
     if (!stagedFiles) {
       return;
