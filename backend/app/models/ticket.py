@@ -82,6 +82,6 @@ class Ticket(Base):
     assigned_staff: Mapped[Optional["User"]] = relationship("User", back_populates="assigned_tickets", foreign_keys=[assigned_staff_id], lazy="selectin")
     department: Mapped[Optional["Department"]] = relationship("Department", back_populates="tickets", lazy="selectin")
     events: Mapped[List["TicketEvent"]] = relationship("TicketEvent", back_populates="ticket", cascade="all, delete-orphan", order_by="TicketEvent.created_at.asc()", lazy="selectin")
-    upvotes: Mapped[List["Upvote"]] = relationship("Upvote", back_populates="ticket", cascade="all, delete-orphan")
-    notifications: Mapped[List["Notification"]] = relationship("Notification", back_populates="ticket", cascade="all, delete-orphan")
+    upvotes: Mapped[List["Upvote"]] = relationship("Upvote", back_populates="ticket", cascade="all, delete-orphan", lazy="selectin")
+    notifications: Mapped[List["Notification"]] = relationship("Notification", back_populates="ticket", cascade="all, delete-orphan", lazy="selectin")
     embedding: Mapped[Optional["TicketEmbedding"]] = relationship("TicketEmbedding", back_populates="ticket", uselist=False, cascade="all, delete-orphan", lazy="selectin")
