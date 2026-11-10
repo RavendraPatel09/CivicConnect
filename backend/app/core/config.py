@@ -14,8 +14,8 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     
-    # Database
-    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/civicconnect"
+    # Database (Default to SQLite for local development, overridden by DATABASE_URL env for PostgreSQL)
+    DATABASE_URL: str = "sqlite+aiosqlite:///./civicconnect.db"
     TEST_DATABASE_URL: str = "sqlite+aiosqlite:///:memory:"
     
     # Redis / Celery
