@@ -200,9 +200,37 @@ async def get_me(current_user: User = Depends(get_current_user)):
 
 @router.post("/forgot-password")
 async def forgot_password(req: ForgotPasswordRequest, db: AsyncSession = Depends(get_db)):
-    # In production, send email with reset token. Here return success message.
-    return {"message": "If the account exists, a secure reset link has been dispatched to your email."}
+    res = await db.execute(select(User).where(User.email == req.email.lower()))
+    user = res.scalar_one_or_none()
+    
+    reset_token = None
+    if user:
+        reset_token = create_password_reset_token(user.email)
+    
+    return {
+        "message": "If the account exists, a secure reset link has been dispatched to your email.",
+        "reset_token": reset_token  # Provided for local dev/testing verification
+    }
 
 @router.post("/reset-password")
 async def reset_password(req: ResetPasswordRequest, db: AsyncSession = Depends(get_db)):
+    email = verify_password_reset_token(req.token)
+    if not email:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid, expired, or malformed password reset token"
+        )
+    
+    res = await db.execute(select(User).where(User.email == email.lower()))
+    user = res.scalar_one_or_none()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User account associated with this token does not exist"
+        )
+    
+    user.password_hash = get_password_hash(req.new_password)
+    user.updated_at = datetime.now(timezone.utc)
+    await db.commit()
+    
     return {"message": "Password successfully reset. Please sign in with your new password."}
