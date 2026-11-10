@@ -146,7 +146,13 @@ async def refresh_access_token(req: RefreshTokenRequest, db: AsyncSession = Depe
     )
     token_record = res.scalar_one_or_none()
 
-    if not token_record or token_record.expires_at < datetime.now(timezone.utc):
+    if not token_record:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired refresh token")
+
+    exp = token_record.expires_at
+    if exp.tzinfo is None:
+        exp = exp.replace(tzinfo=timezone.utc)
+    if exp < datetime.now(timezone.utc):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid or expired refresh token")
 
     # Revoke old refresh token (Token Rotation)
