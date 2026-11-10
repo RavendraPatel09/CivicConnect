@@ -38,5 +38,14 @@ class AuthResponse(BaseModel):
     user: "UserResponse"
     tokens: TokenPair
 
+    @property
+    def token(self) -> str:
+        return self.tokens.access_token
+
+    def model_dump(self, *args, **kwargs):
+        d = super().model_dump(*args, **kwargs)
+        d["token"] = self.tokens.access_token
+        return d
+
 from .user import UserResponse
 AuthResponse.model_rebuild()
