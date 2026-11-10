@@ -75,11 +75,13 @@ export const ticketsApi = {
 
   // FastAPI GET /api/v1/tickets/{id}
   async getTicketById(id: string): Promise<Complaint | null> {
-    try {
-      const res = await apiClient.get<Complaint>(`/tickets/${id}`);
-      if (res.data) return res.data;
-    } catch (error) {
-      // Fallback
+    if (!isTestEnv) {
+      try {
+        const res = await apiClient.get<Complaint>(`/tickets/${id}`);
+        if (res.data) return res.data;
+      } catch (error) {
+        // Fallback
+      }
     }
     const ticket = mockStorage.getComplaintById(id);
     return ticket || null;
@@ -87,24 +89,26 @@ export const ticketsApi = {
 
   // FastAPI POST /api/v1/tickets
   async createTicket(formData: ComplaintFormData, citizen: User): Promise<Complaint> {
-    try {
-      const res = await apiClient.post<Complaint>('/tickets', {
-        title: formData.title,
-        description: formData.description,
-        category: formData.category,
-        severity: formData.severity,
-        address: formData.address,
-        landmark: formData.landmark || undefined,
-        lat: formData.lat,
-        lng: formData.lng,
-        images: formData.images,
-      });
-      if (res.data) {
-        mockStorage.addComplaint(res.data);
-        return res.data;
+    if (!isTestEnv) {
+      try {
+        const res = await apiClient.post<Complaint>('/tickets', {
+          title: formData.title,
+          description: formData.description,
+          category: formData.category,
+          severity: formData.severity,
+          address: formData.address,
+          landmark: formData.landmark || undefined,
+          lat: formData.lat,
+          lng: formData.lng,
+          images: formData.images,
+        });
+        if (res.data) {
+          mockStorage.addComplaint(res.data);
+          return res.data;
+        }
+      } catch (error) {
+        // Fallback simulation
       }
-    } catch (error) {
-      // Fallback simulation
     }
 
     const categoryMeta = CATEGORIES[formData.category];
