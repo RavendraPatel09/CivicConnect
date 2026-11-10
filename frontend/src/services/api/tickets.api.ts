@@ -274,14 +274,16 @@ export const ticketsApi = {
     data: TriageOverrideFormData,
     admin: User
   ): Promise<Complaint | null> {
-    try {
-      const res = await apiClient.post<Complaint>(`/tickets/${id}/triage-override`, data);
-      if (res.data) {
-        mockStorage.updateComplaint(id, res.data);
-        return res.data;
+    if (!isTestEnv) {
+      try {
+        const res = await apiClient.post<Complaint>(`/tickets/${id}/triage-override`, data);
+        if (res.data) {
+          mockStorage.updateComplaint(id, res.data);
+          return res.data;
+        }
+      } catch (error) {
+        // Fallback
       }
-    } catch (error) {
-      // Fallback
     }
 
     const ticket = mockStorage.getComplaintById(id);
