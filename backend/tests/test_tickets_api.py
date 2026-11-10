@@ -52,11 +52,18 @@ async def test_tickets_full_lifecycle():
         assert res_filtered.status_code == 200
         assert all(t["category"] == "roads_potholes" for t in res_filtered.json())
 
-        # 5. Upvote ticket
-        res_upvote = await client.post(f"/api/v1/tickets/{ticket_id}/upvote", headers=headers)
-        assert res_upvote.status_code == 200
-        upvoted_data = res_upvote.json()
-        assert upvoted_data["upvotes"] >= 1
+        # 5. Upvote ticket toggle test (creator auto-upvoted to 1 on create)
+        # Calling upvote toggles it off
+        res_toggle_off = await client.post(f"/api/v1/tickets/{ticket_id}/upvote", headers=headers)
+        assert res_toggle_off.status_code == 200
+        assert res_toggle_off.json()["isUpvoted"] is False
+        assert res_toggle_off.json()["upvotes"] == 0
+
+        # Calling upvote again toggles it back on
+        res_toggle_on = await client.post(f"/api/v1/tickets/{ticket_id}/upvote", headers=headers)
+        assert res_toggle_on.status_code == 200
+        assert res_toggle_on.json()["isUpvoted"] is True
+        assert res_toggle_on.json()["upvotes"] == 1
 
         # 6. Register an Admin to update status and override triage
         admin_payload = {
