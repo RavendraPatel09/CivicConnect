@@ -8,7 +8,16 @@ from .core.config import settings
 from .core.database import engine, Base
 from .core.security import get_password_hash
 from .models import Department, User, UserRole
-from .api.routes import auth, tickets, notifications
+from .api.routes import (
+    auth,
+    tickets,
+    notifications,
+    departments,
+    analytics,
+    admin,
+    documents,
+    websocket_route
+)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
