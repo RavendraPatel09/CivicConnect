@@ -1,7 +1,11 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
-// Reads from environment or defaults to the mock/local API prefix
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/v1';
+// Reads from environment or connects to local FastAPI backend
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:8000/api/v1'
+    : '/api/v1');
 
 export const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
