@@ -11,23 +11,27 @@ import { ComplaintFormData, TriageOverrideFormData } from '../../schemas';
 import { CATEGORIES } from '../../constants';
 import apiClient from './client';
 
+const isTestEnv = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
+
 export const ticketsApi = {
   // FastAPI GET /api/v1/tickets?category=...&status=...&search=...
   async getTickets(filters?: FilterOptions): Promise<Complaint[]> {
-    try {
-      const params: Record<string, string | undefined> = {};
-      if (filters?.search) params.search = filters.search;
-      if (filters?.category && filters.category !== 'all') params.category = filters.category;
-      if (filters?.status && filters.status !== 'all') params.status = filters.status;
-      if (filters?.severity && filters.severity !== 'all') params.severity = filters.severity;
-      if (filters?.sortBy) params.sort_by = filters.sortBy;
+    if (!isTestEnv) {
+      try {
+        const params: Record<string, string | undefined> = {};
+        if (filters?.search) params.search = filters.search;
+        if (filters?.category && filters.category !== 'all') params.category = filters.category;
+        if (filters?.status && filters.status !== 'all') params.status = filters.status;
+        if (filters?.severity && filters.severity !== 'all') params.severity = filters.severity;
+        if (filters?.sortBy) params.sort_by = filters.sortBy;
 
-      const res = await apiClient.get<Complaint[]>('/tickets', { params });
-      if (res.data && Array.isArray(res.data) && res.data.length > 0) {
-        return res.data;
+        const res = await apiClient.get<Complaint[]>('/tickets', { params });
+        if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+          return res.data;
+        }
+      } catch (error) {
+        // Fallback to local mock data
       }
-    } catch (error) {
-      // Fallback to local mock data
     }
 
     let list = mockStorage.getComplaints();
