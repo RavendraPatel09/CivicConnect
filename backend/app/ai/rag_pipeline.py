@@ -91,10 +91,11 @@ async def query_rag(db: AsyncSession, query_text: str, top_k: int = 3) -> RAGQue
     scored_docs.sort(key=lambda x: x[1], reverse=True)
     top_matches = scored_docs[:top_k]
 
-    # Filter by minimum relevance threshold (0.55)
+    # Filter by minimum relevance threshold (0.25 for deterministic vectors, 0.55 for neural embeddings)
+    threshold = 0.25 if not (settings.GEMINI_API_KEY and len(settings.GEMINI_API_KEY.strip()) > 10) else 0.55
     relevant_chunks: List[DocumentChunkResult] = []
     for doc, sim in top_matches:
-        if sim >= 0.55:
+        if sim >= threshold:
             relevant_chunks.append(
                 DocumentChunkResult(
                     document_id=doc.id,
