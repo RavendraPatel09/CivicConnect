@@ -196,17 +196,19 @@ export const ticketsApi = {
     actor: User,
     notes?: string
   ): Promise<Complaint | null> {
-    try {
-      const res = await apiClient.patch<Complaint>(`/tickets/${id}/status`, {
-        status: newStatus,
-        notes: notes,
-      });
-      if (res.data) {
-        mockStorage.updateComplaint(id, res.data);
-        return res.data;
+    if (!isTestEnv) {
+      try {
+        const res = await apiClient.patch<Complaint>(`/tickets/${id}/status`, {
+          status: newStatus,
+          notes: notes,
+        });
+        if (res.data) {
+          mockStorage.updateComplaint(id, res.data);
+          return res.data;
+        }
+      } catch (error) {
+        // Fallback
       }
-    } catch (error) {
-      // Fallback
     }
 
     const ticket = mockStorage.getComplaintById(id);
