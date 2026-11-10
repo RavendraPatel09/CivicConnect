@@ -54,6 +54,7 @@ async def mark_as_read(
     return NotificationReadResponse(success=True, message="Marked as read")
 
 @router.post("/read-all", response_model=NotificationReadResponse)
+@router.post("/mark-all-read", response_model=NotificationReadResponse)
 async def mark_all_as_read(
     current_user: User = Depends(get_current_active_user),
     db: AsyncSession = Depends(get_db)
