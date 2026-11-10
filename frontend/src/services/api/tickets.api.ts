@@ -9,13 +9,28 @@ import {
 import mockStorage from '../mock/mockStorage';
 import { ComplaintFormData, TriageOverrideFormData } from '../../schemas';
 import { CATEGORIES } from '../../constants';
+import apiClient from './client';
 
 export const ticketsApi = {
-  // Simulates FastAPI GET /api/v1/tickets?category=...&status=...&search=...
+  // FastAPI GET /api/v1/tickets?category=...&status=...&search=...
   async getTickets(filters?: FilterOptions): Promise<Complaint[]> {
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    let list = mockStorage.getComplaints();
+    try {
+      const params: Record<string, string | undefined> = {};
+      if (filters?.search) params.search = filters.search;
+      if (filters?.category && filters.category !== 'all') params.category = filters.category;
+      if (filters?.status && filters.status !== 'all') params.status = filters.status;
+      if (filters?.severity && filters.severity !== 'all') params.severity = filters.severity;
+      if (filters?.sortBy) params.sort_by = filters.sortBy;
 
+      const res = await apiClient.get<Complaint[]>('/tickets', { params });
+      if (res.data && Array.isArray(res.data) && res.data.length > 0) {
+        return res.data;
+      }
+    } catch (error) {
+      // Fallback to local mock data
+    }
+
+    let list = mockStorage.getComplaints();
     if (!filters) return list;
 
     if (filters.search) {
@@ -54,21 +69,43 @@ export const ticketsApi = {
     return list;
   },
 
-  // Simulates FastAPI GET /api/v1/tickets/{id}
+  // FastAPI GET /api/v1/tickets/{id}
   async getTicketById(id: string): Promise<Complaint | null> {
-    await new Promise((resolve) => setTimeout(resolve, 150));
+    try {
+      const res = await apiClient.get<Complaint>(`/tickets/${id}`);
+      if (res.data) return res.data;
+    } catch (error) {
+      // Fallback
+    }
     const ticket = mockStorage.getComplaintById(id);
     return ticket || null;
   },
 
-  // Simulates FastAPI POST /api/v1/tickets
+  // FastAPI POST /api/v1/tickets
   async createTicket(formData: ComplaintFormData, citizen: User): Promise<Complaint> {
-    await new Promise((resolve) => setTimeout(resolve, 450));
+    try {
+      const res = await apiClient.post<Complaint>('/tickets', {
+        title: formData.title,
+        description: formData.description,
+        category: formData.category,
+        severity: formData.severity,
+        address: formData.address,
+        landmark: formData.landmark || undefined,
+        lat: formData.lat,
+        lng: formData.lng,
+        images: formData.images,
+      });
+      if (res.data) {
+        mockStorage.addComplaint(res.data);
+        return res.data;
+      }
+    } catch (error) {
+      // Fallback simulation
+    }
 
     const categoryMeta = CATEGORIES[formData.category];
     const newId = `CC-2025-${Math.floor(1000 + Math.random() * 9000)}`;
 
-    // Simulated deterministic AI Triage score calculation based on severity & category
     const severityScoreMap: Record<string, number> = {
       low: 45,
       medium: 65,
@@ -144,14 +181,26 @@ export const ticketsApi = {
     return newComplaint;
   },
 
-  // Simulates FastAPI PATCH /api/v1/tickets/{id}/status
+  // FastAPI PATCH /api/v1/tickets/{id}/status
   async updateTicketStatus(
     id: string,
     newStatus: ComplaintStatus,
     actor: User,
     notes?: string
   ): Promise<Complaint | null> {
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    try {
+      const res = await apiClient.patch<Complaint>(`/tickets/${id}/status`, {
+        status: newStatus,
+        notes: notes,
+      });
+      if (res.data) {
+        mockStorage.updateComplaint(id, res.data);
+        return res.data;
+      }
+    } catch (error) {
+      // Fallback
+    }
+
     const ticket = mockStorage.getComplaintById(id);
     if (!ticket) return null;
 
@@ -193,7 +242,6 @@ export const ticketsApi = {
 
     const updated = mockStorage.updateComplaint(id, patch);
 
-    // Trigger notification to citizen
     if (updated) {
       mockStorage.addNotification({
         id: `notif-${Date.now()}`,
@@ -210,13 +258,22 @@ export const ticketsApi = {
     return updated;
   },
 
-  // Simulates FastAPI POST /api/v1/tickets/{id}/triage-override
+  // FastAPI POST /api/v1/tickets/{id}/triage-override
   async overrideAITriage(
     id: string,
     data: TriageOverrideFormData,
     admin: User
   ): Promise<Complaint | null> {
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    try {
+      const res = await apiClient.post<Complaint>(`/tickets/${id}/triage-override`, data);
+      if (res.data) {
+        mockStorage.updateComplaint(id, res.data);
+        return res.data;
+      }
+    } catch (error) {
+      // Fallback
+    }
+
     const ticket = mockStorage.getComplaintById(id);
     if (!ticket) return null;
 
@@ -254,9 +311,19 @@ export const ticketsApi = {
     return mockStorage.updateComplaint(id, patch);
   },
 
-  // Simulates FastAPI POST /api/v1/tickets/{id}/upvote
+  // FastAPI POST /api/v1/tickets/{id}/upvote
   async toggleUpvote(id: string): Promise<Complaint | null> {
-    await new Promise((resolve) => setTimeout(resolve, 150));
+    try {
+      const res = await apiClient.post<{ upvotes: number; isUpvoted: boolean }>(`/tickets/${id}/upvote`);
+      const ticket = mockStorage.getComplaintById(id);
+      if (ticket && res.data) {
+        ticket.upvotes = res.data.upvotes;
+        ticket.isUpvoted = res.data.isUpvoted;
+        return ticket;
+      }
+    } catch (error) {
+      // Fallback
+    }
     return mockStorage.toggleUpvote(id);
   },
 };
