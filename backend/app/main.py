@@ -121,6 +121,11 @@ if os.path.exists(settings.UPLOAD_DIR):
 app.include_router(auth.router, prefix=settings.API_V1_STR)
 app.include_router(tickets.router, prefix=settings.API_V1_STR)
 app.include_router(notifications.router, prefix=settings.API_V1_STR)
+app.include_router(departments.router, prefix=settings.API_V1_STR)
+app.include_router(analytics.router, prefix=settings.API_V1_STR)
+app.include_router(admin.router, prefix=settings.API_V1_STR)
+app.include_router(documents.router, prefix=settings.API_V1_STR)
+app.include_router(websocket_route.router)
 
 @app.get("/health", tags=["System"])
 @app.get(f"{settings.API_V1_STR}/health", tags=["System"])
