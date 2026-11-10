@@ -1,20 +1,45 @@
 from typing import Optional, List
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 from ..models.ticket import ComplaintCategory, ComplaintSeverity, ComplaintStatus
 
 class TicketEventResponse(BaseModel):
     id: str
-    ticket_id: str
+    ticket_id: Optional[str] = None
     actor_id: Optional[str] = None
-    actor_name: str
-    actor_role: str
-    event_type: str
+    actor_name: Optional[str] = None
+    actor_role: Optional[str] = None
+    event_type: Optional[str] = None
     previous_status: Optional[str] = None
     new_status: Optional[str] = None
     title: str
     note: Optional[str] = None
     created_at: datetime
+
+    @computed_field
+    @property
+    def timestamp(self) -> str:
+        return self.created_at.isoformat()
+
+    @computed_field
+    @property
+    def status(self) -> str:
+        return self.new_status or "filed"
+
+    @computed_field
+    @property
+    def description(self) -> str:
+        return self.note or self.title
+
+    @computed_field
+    @property
+    def actorName(self) -> str:
+        return self.actor_name or "System"
+
+    @computed_field
+    @property
+    def actorRole(self) -> str:
+        return self.actor_role or "System"
 
     class Config:
         from_attributes = True
