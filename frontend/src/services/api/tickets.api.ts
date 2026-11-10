@@ -325,16 +325,18 @@ export const ticketsApi = {
 
   // FastAPI POST /api/v1/tickets/{id}/upvote
   async toggleUpvote(id: string): Promise<Complaint | null> {
-    try {
-      const res = await apiClient.post<{ upvotes: number; isUpvoted: boolean }>(`/tickets/${id}/upvote`);
-      const ticket = mockStorage.getComplaintById(id);
-      if (ticket && res.data) {
-        ticket.upvotes = res.data.upvotes;
-        ticket.isUpvoted = res.data.isUpvoted;
-        return ticket;
+    if (!isTestEnv) {
+      try {
+        const res = await apiClient.post<{ upvotes: number; isUpvoted: boolean }>(`/tickets/${id}/upvote`);
+        const ticket = mockStorage.getComplaintById(id);
+        if (ticket && res.data) {
+          ticket.upvotes = res.data.upvotes;
+          ticket.isUpvoted = res.data.isUpvoted;
+          return ticket;
+        }
+      } catch (error) {
+        // Fallback
       }
-    } catch (error) {
-      // Fallback
     }
     return mockStorage.toggleUpvote(id);
   },
