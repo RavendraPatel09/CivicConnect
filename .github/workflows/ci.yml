@@ -21,12 +21,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
-          pip install aiosqlite greenlet
+          pip install aiosqlite greenlet email-validator
 
       - name: Run backend pytest
+        env:
+          DATABASE_URL: sqlite+aiosqlite:///./test_civicconnect.db
+          ENVIRONMENT: test
         run: |
           cd backend
-          pytest
+          pytest -v
 
   frontend-build:
     runs-on: ubuntu-latest
