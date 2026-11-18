@@ -8,7 +8,7 @@ import Logo from '../../components/common/Logo';
 import Input from '../../components/forms/Input';
 import Button from '../../components/ui/Button';
 import ThemeToggle from '../../components/ui/ThemeToggle';
-import { Mail, Lock, AlertCircle, Sparkles, UserCheck, HardHat, Shield } from 'lucide-react';
+import { Mail, Lock, AlertCircle, UserCheck, HardHat, Shield } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const { login } = useAuth();
@@ -54,7 +54,7 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B1320] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
+    <div className="min-h-screen bg-[#FAFAF7] dark:bg-[#0B1320] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative text-[#202B2A] dark:text-[#F1F5F9]">
       <div className="absolute top-6 right-6">
         <ThemeToggle />
       </div>
@@ -63,55 +63,54 @@ export const LoginPage: React.FC = () => {
         <Link to="/" className="inline-block">
           <Logo size="lg" />
         </Link>
-        <h2 className="mt-6 text-2xl font-bold tracking-tight text-[#142B45] dark:text-white">
-          Sign in to your account
+        <h2 className="mt-6 text-xl sm:text-2xl font-bold tracking-tight text-[#202B2A] dark:text-white">
+          Sign in to CivicConnect AI
         </h2>
-        <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+        <p className="mt-1.5 text-xs text-[#66736F] dark:text-slate-400">
           Or{' '}
-          <Link to="/register" className="font-semibold text-civic hover:text-blue-700">
+          <Link to="/register" className="font-semibold text-[#2563EB] hover:underline">
             register for a new citizen or municipal staff account
           </Link>
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white dark:bg-[#131E30] py-8 px-6 shadow-sm rounded-2xl border border-slate-200/90 dark:border-[#22344D] sm:px-10">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
+        <div className="bg-white dark:bg-[#131E30] py-8 px-6 shadow-subtle rounded-lg border border-[#E5E8E4] dark:border-[#22344D] sm:px-10">
           {/* Quick Demo Autofill Bar */}
-          <div className="mb-6 p-3.5 bg-slate-50 dark:bg-[#0E1726] rounded-xl border border-slate-200/80 dark:border-slate-800">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase text-slate-500 tracking-wider mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-civic" />
-              One-Click Demo Personas
+          <div className="mb-6 p-3.5 bg-[#FAFAF7] dark:bg-[#0E1624] rounded-lg border border-[#E5E8E4] dark:border-[#22344D]">
+            <div className="text-[11px] font-bold uppercase text-[#66736F] dark:text-slate-400 tracking-wider mb-2">
+              Demonstration Quick Personas
             </div>
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
                 onClick={() => fillQuickDemo('elena.rostova@example.com', 'citizen')}
-                className="p-1.5 rounded-lg text-[11px] font-medium bg-white dark:bg-[#131E30] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-civic text-center"
+                className="p-2 rounded-md text-[11px] font-semibold bg-white dark:bg-[#131E30] border border-[#E5E8E4] dark:border-[#22344D] text-[#202B2A] dark:text-slate-200 hover:border-[#183B3A] text-center transition-colors"
               >
-                <UserCheck className="w-3.5 h-3.5 text-emerald-500 mx-auto mb-0.5" />
+                <UserCheck className="w-3.5 h-3.5 text-[#23845B] mx-auto mb-1" />
                 Citizen
               </button>
               <button
                 type="button"
                 onClick={() => fillQuickDemo('marcus.vance@citygov.org', 'staff')}
-                className="p-1.5 rounded-lg text-[11px] font-medium bg-white dark:bg-[#131E30] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-civic text-center"
+                className="p-2 rounded-md text-[11px] font-semibold bg-white dark:bg-[#131E30] border border-[#E5E8E4] dark:border-[#22344D] text-[#202B2A] dark:text-slate-200 hover:border-[#183B3A] text-center transition-colors"
               >
-                <HardHat className="w-3.5 h-3.5 text-amber-500 mx-auto mb-0.5" />
+                <HardHat className="w-3.5 h-3.5 text-[#B7791F] mx-auto mb-1" />
                 Staff
               </button>
               <button
                 type="button"
                 onClick={() => fillQuickDemo('sarah.chen@civicconnect.gov', 'admin')}
-                className="p-1.5 rounded-lg text-[11px] font-medium bg-white dark:bg-[#131E30] border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-civic text-center"
+                className="p-2 rounded-md text-[11px] font-semibold bg-white dark:bg-[#131E30] border border-[#E5E8E4] dark:border-[#22344D] text-[#202B2A] dark:text-slate-200 hover:border-[#183B3A] text-center transition-colors"
               >
-                <Shield className="w-3.5 h-3.5 text-blue-500 mx-auto mb-0.5" />
+                <Shield className="w-3.5 h-3.5 text-[#2563EB] mx-auto mb-1" />
                 Admin
               </button>
             </div>
           </div>
 
           {authError && (
-            <div className="mb-5 p-3 rounded-lg bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 flex items-center gap-2 text-xs text-rose-700 dark:text-rose-300">
+            <div className="mb-5 p-3 rounded-md bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 flex items-center gap-2 text-xs text-rose-700 dark:text-rose-300">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
               <span>{authError}</span>
             </div>
@@ -137,10 +136,10 @@ export const LoginPage: React.FC = () => {
             />
 
             <div className="flex items-center justify-between text-xs pt-1">
-              <label className="flex items-center text-slate-600 dark:text-slate-400">
+              <label className="flex items-center text-[#66736F] dark:text-slate-400">
                 <input
                   type="checkbox"
-                  className="rounded border-slate-300 text-civic focus:ring-civic mr-2"
+                  className="rounded border-[#E5E8E4] text-[#183B3A] focus:ring-[#183B3A] mr-2"
                   {...register('rememberMe')}
                 />
                 Remember me
@@ -148,7 +147,7 @@ export const LoginPage: React.FC = () => {
 
               <Link
                 to="/forgot-password"
-                className="font-medium text-civic hover:text-blue-700 dark:hover:text-blue-400"
+                className="font-medium text-[#2563EB] hover:underline"
               >
                 Forgot password?
               </Link>
@@ -156,7 +155,7 @@ export const LoginPage: React.FC = () => {
 
             <Button
               type="submit"
-              variant="civic"
+              variant="primary"
               size="md"
               className="w-full mt-2"
               isLoading={isSubmitting}
@@ -166,8 +165,8 @@ export const LoginPage: React.FC = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <span className="text-[11px] text-slate-400 dark:text-slate-500">
-              Demonstration auth layer • Ready for FastAPI OAuth2 Bearer token
+            <span className="text-[11px] text-[#66736F] dark:text-slate-400">
+              CivicConnect AI • Production-ready OAuth2 Bearer token authentication
             </span>
           </div>
         </div>
