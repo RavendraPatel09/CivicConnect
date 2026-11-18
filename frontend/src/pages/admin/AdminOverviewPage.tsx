@@ -13,7 +13,6 @@ import {
   AlertTriangle,
   CheckCircle2,
   TrendingUp,
-  Cpu,
   ArrowRight,
   Shield,
   Layers,
@@ -54,7 +53,7 @@ export const AdminOverviewPage: React.FC = () => {
   if (isLoading || !analytics) {
     return (
       <div className="min-h-[50vh] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-civic border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#183B3A] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -66,109 +65,107 @@ export const AdminOverviewPage: React.FC = () => {
   }));
 
   const priorityColors: Record<string, string> = {
-    low: '#94A3B8',
-    medium: '#3B82F6',
-    high: '#F59E0B',
-    critical: '#EF4444',
+    low: '#64748B',
+    medium: '#2563EB',
+    high: '#B7791F',
+    critical: '#C34B4B',
   };
 
   const priorityPieData = analytics.priorityDistribution.map((item) => ({
     name: item.priority.toUpperCase(),
     value: item.count,
-    color: priorityColors[item.priority] || '#94A3B8',
+    color: priorityColors[item.priority] || '#64748B',
   }));
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#E5E8E4] dark:border-[#22344D]">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-blue-50 dark:bg-blue-950/40 text-civic mb-2">
-            <Shield className="w-3.5 h-3.5" />
-            Executive Oversight Dashboard
+          <div className="text-[11px] font-bold uppercase tracking-wider text-[#66736F] dark:text-slate-400 mb-0.5">
+            Executive Oversight
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+          <h1 className="text-xl sm:text-2xl font-bold text-[#202B2A] dark:text-white">
             Municipal Incident Overview
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-            Cross-department resolution KPIs, AI triage accuracy, and dispatch efficiency.
+          <p className="text-xs text-[#66736F] dark:text-slate-400 mt-0.5">
+            Cross-department resolution KPIs, triage volume, and dispatch performance.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <Link to="/admin/triage">
             <Button
-              variant="civic"
+              variant="primary"
               size="sm"
-              leftIcon={<Cpu className="w-4 h-4" />}
             >
-              Open AI Triage Queue
+              Open Triage Console
             </Button>
           </Link>
         </div>
       </div>
 
       {/* Metric Cards Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
         <Card>
           <CardContent className="p-4">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#66736F] dark:text-slate-400">
               Total Logged
             </span>
-            <div className="text-2xl font-black text-slate-900 dark:text-white mt-1">
+            <div className="text-2xl font-bold tabular-nums text-[#202B2A] dark:text-white mt-1">
               {analytics.totalComplaints}
             </div>
-            <span className="text-[10px] text-emerald-600 font-medium">
-              +14% vs last month
+            <span className="text-[10px] text-[#23845B] font-semibold">
+              Active intake tracking
             </span>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-4">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#66736F] dark:text-slate-400">
               Pending Intake
             </span>
-            <div className="text-2xl font-black text-amber-600 dark:text-amber-400 mt-1">
+            <div className="text-2xl font-bold tabular-nums text-[#B7791F] mt-1">
               {analytics.pendingComplaints}
             </div>
-            <span className="text-[10px] text-slate-500">Awaiting department</span>
+            <span className="text-[10px] text-[#66736F] dark:text-slate-400">Awaiting department</span>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-4">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#66736F] dark:text-slate-400">
               High / Critical
             </span>
-            <div className="text-2xl font-black text-rose-600 dark:text-rose-400 mt-1">
+            <div className="text-2xl font-bold tabular-nums text-[#C34B4B] mt-1">
               {analytics.highPriorityComplaints}
             </div>
-            <span className="text-[10px] text-rose-500 font-medium">Under active SLA</span>
+            <span className="text-[10px] text-[#C34B4B] font-medium">Under active SLA</span>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-4">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#66736F] dark:text-slate-400">
               Resolved Cases
             </span>
-            <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">
+            <div className="text-2xl font-bold tabular-nums text-[#23845B] mt-1">
               {analytics.resolvedComplaints}
             </div>
-            <span className="text-[10px] text-emerald-600 font-medium">Verified closed</span>
+            <span className="text-[10px] text-[#23845B] font-medium">Verified closed</span>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-4">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#66736F] dark:text-slate-400">
               Avg Resolution
             </span>
-            <div className="text-2xl font-black text-teal mt-1">
+            <div className="text-2xl font-bold tabular-nums text-[#183B3A] dark:text-[#3B8278] mt-1">
               {analytics.avgResolutionDays} Days
             </div>
-            <span className="text-[10px] text-slate-500 font-medium">Target: &lt; 3.0 days</span>
+            <span className="text-[10px] text-[#66736F] dark:text-slate-400 font-medium">Target: &lt; 3.0 days</span>
           </CardContent>
         </Card>
       </div>
@@ -191,22 +188,22 @@ export const AdminOverviewPage: React.FC = () => {
                   >
                     <defs>
                       <linearGradient id="colorFiled" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#2563EB" stopOpacity={0.4} />
-                        <stop offset="95%" stopColor="#2563EB" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#183B3A" stopOpacity={0.25} />
+                        <stop offset="95%" stopColor="#183B3A" stopOpacity={0} />
                       </linearGradient>
                       <linearGradient id="colorResolved" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10B981" stopOpacity={0.4} />
-                        <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#23845B" stopOpacity={0.25} />
+                        <stop offset="95%" stopColor="#23845B" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
+                    <CartesianGrid strokeDasharray="3 3" opacity={0.12} />
                     <XAxis dataKey="month" tick={{ fontSize: 11 }} />
                     <YAxis tick={{ fontSize: 11 }} />
                     <Tooltip
                       contentStyle={{
-                        borderRadius: '8px',
+                        borderRadius: '6px',
                         fontSize: '12px',
-                        border: '1px solid #E2E8F0',
+                        border: '1px solid #E5E8E4',
                       }}
                     />
                     <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} />
@@ -214,7 +211,7 @@ export const AdminOverviewPage: React.FC = () => {
                       type="monotone"
                       dataKey="filed"
                       name="Complaints Filed"
-                      stroke="#2563EB"
+                      stroke="#183B3A"
                       strokeWidth={2}
                       fillOpacity={1}
                       fill="url(#colorFiled)"
@@ -223,7 +220,7 @@ export const AdminOverviewPage: React.FC = () => {
                       type="monotone"
                       dataKey="resolved"
                       name="Work Orders Resolved"
-                      stroke="#10B981"
+                      stroke="#23845B"
                       strokeWidth={2}
                       fillOpacity={1}
                       fill="url(#colorResolved)"
@@ -252,7 +249,7 @@ export const AdminOverviewPage: React.FC = () => {
                       cy="50%"
                       innerRadius={55}
                       outerRadius={80}
-                      paddingAngle={4}
+                      paddingAngle={3}
                       dataKey="value"
                     >
                       {priorityPieData.map((entry, index) => (
@@ -261,24 +258,25 @@ export const AdminOverviewPage: React.FC = () => {
                     </Pie>
                     <Tooltip
                       contentStyle={{
-                        borderRadius: '8px',
+                        borderRadius: '6px',
                         fontSize: '12px',
+                        border: '1px solid #E5E8E4',
                       }}
                     />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px]">
+              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#E5E8E4] dark:border-[#22344D] text-[11px]">
                 {priorityPieData.map((p) => (
                   <div key={p.name} className="flex items-center gap-1.5">
                     <span
-                      className="w-2.5 h-2.5 rounded-full"
+                      className="w-2.5 h-2.5 rounded-sm"
                       style={{ backgroundColor: p.color }}
                     />
-                    <span className="font-semibold text-slate-700 dark:text-slate-300">
+                    <span className="font-semibold text-[#202B2A] dark:text-slate-300">
                       {p.name}:
                     </span>
-                    <span className="text-slate-500">{p.value}</span>
+                    <span className="text-[#66736F] dark:text-slate-400 tabular-nums">{p.value}</span>
                   </div>
                 ))}
               </div>
@@ -304,7 +302,7 @@ export const AdminOverviewPage: React.FC = () => {
                     layout="vertical"
                     margin={{ top: 5, right: 20, left: 20, bottom: 5 }}
                   >
-                    <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
+                    <CartesianGrid strokeDasharray="3 3" opacity={0.12} />
                     <XAxis type="number" tick={{ fontSize: 10 }} />
                     <YAxis
                       dataKey="name"
@@ -314,13 +312,14 @@ export const AdminOverviewPage: React.FC = () => {
                     />
                     <Tooltip
                       contentStyle={{
-                        borderRadius: '8px',
+                        borderRadius: '6px',
                         fontSize: '11px',
+                        border: '1px solid #E5E8E4',
                       }}
                     />
                     <Legend wrapperStyle={{ fontSize: '11px' }} />
-                    <Bar dataKey="Total" fill="#2563EB" radius={[0, 4, 4, 0]} />
-                    <Bar dataKey="Resolved" fill="#10B981" radius={[0, 4, 4, 0]} />
+                    <Bar dataKey="Total" fill="#183B3A" radius={[0, 3, 3, 0]} />
+                    <Bar dataKey="Resolved" fill="#23845B" radius={[0, 3, 3, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -337,7 +336,7 @@ export const AdminOverviewPage: React.FC = () => {
             />
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-50 dark:bg-[#0E1726] border-b border-slate-100 dark:border-slate-800 text-[11px] font-bold text-slate-500 uppercase">
+                <thead className="bg-[#FAFAF7] dark:bg-[#0E1624] border-b border-[#E5E8E4] dark:border-[#22344D] text-[11px] font-bold text-[#66736F] dark:text-slate-400 uppercase tracking-wider">
                   <tr>
                     <th className="px-4 py-3">Department</th>
                     <th className="px-3 py-3 text-center">Assigned</th>
@@ -345,23 +344,23 @@ export const AdminOverviewPage: React.FC = () => {
                     <th className="px-3 py-3 text-right">Satisfaction</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                <tbody className="divide-y divide-[#E5E8E4] dark:divide-[#22344D]">
                   {analytics.departmentPerformance.map((dept) => (
                     <tr
                       key={dept.department}
-                      className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
+                      className="hover:bg-[#FAFAF7] dark:hover:bg-[#111A29] transition-colors"
                     >
-                      <td className="px-4 py-3 font-semibold text-slate-800 dark:text-slate-200">
+                      <td className="px-4 py-3 font-semibold text-[#202B2A] dark:text-slate-200">
                         {dept.department.replace('Department of ', '').replace('Municipal ', '')}
                       </td>
-                      <td className="px-3 py-3 text-center font-bold text-slate-700 dark:text-slate-300">
+                      <td className="px-3 py-3 text-center font-bold tabular-nums text-[#202B2A] dark:text-slate-300">
                         {dept.totalAssigned}
                       </td>
-                      <td className="px-3 py-3 text-center text-slate-500">
+                      <td className="px-3 py-3 text-center text-[#66736F] dark:text-slate-400 tabular-nums">
                         {dept.avgResolutionHours} hrs
                       </td>
                       <td className="px-3 py-3 text-right">
-                        <span className="font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded">
+                        <span className="font-semibold text-[#23845B] bg-[#23845B]/10 px-2 py-0.5 rounded text-[11px] tabular-nums">
                           {dept.satisfactionRate}%
                         </span>
                       </td>
@@ -382,39 +381,39 @@ export const AdminOverviewPage: React.FC = () => {
           action={
             <Link
               to="/admin/queue"
-              className="text-xs font-semibold text-civic hover:text-blue-700 flex items-center gap-1"
+              className="text-xs font-semibold text-[#2563EB] hover:underline flex items-center gap-1"
             >
               Open Full Work Queue
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           }
         />
-        <div className="divide-y divide-slate-100 dark:divide-slate-800">
+        <div className="divide-y divide-[#E5E8E4] dark:divide-[#22344D]">
           {recentComplaints.map((ticket) => (
             <div
               key={ticket.id}
               onClick={() => navigate(`/tickets/${ticket.id}`)}
-              className="p-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+              className="p-4 hover:bg-[#FAFAF7] dark:hover:bg-[#111A29] transition-colors cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3"
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-bold text-slate-500">
+                  <span className="text-xs font-mono font-bold text-[#183B3A] dark:text-[#3B8278]">
                     {ticket.id}
                   </span>
                   <CategoryBadge category={ticket.category} size="sm" />
                   <SeverityBadge severity={ticket.severity} size="sm" />
                   <StatusBadge status={ticket.status} size="sm" />
                 </div>
-                <h4 className="text-xs font-bold text-slate-900 dark:text-white">
+                <h4 className="text-xs font-semibold text-[#202B2A] dark:text-white">
                   {ticket.title}
                 </h4>
-                <p className="text-[11px] text-slate-500">
+                <p className="text-[11px] text-[#66736F] dark:text-slate-400">
                   {ticket.location.address} • Citizen: {ticket.citizenName}
                 </p>
               </div>
 
               <div className="flex items-center gap-3 self-end sm:self-auto">
-                <span className="text-xs font-bold text-teal bg-teal-50 dark:bg-teal-950/40 px-2 py-0.5 rounded border border-teal-200 dark:border-teal-800">
+                <span className="text-xs font-bold text-[#183B3A] dark:text-[#3B8278] bg-[#FAFAF7] dark:bg-[#0E1624] px-2 py-0.5 rounded border border-[#E5E8E4] dark:border-[#22344D] tabular-nums">
                   Priority {ticket.aiTriage.priorityScore}
                 </span>
                 <Button variant="outline" size="sm">
