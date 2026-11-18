@@ -81,32 +81,32 @@ export const CATEGORIES: Record<ComplaintCategory, CategoryMeta> = {
 export const STATUS_META: Record<ComplaintStatus, { label: string; color: string; badgeClass: string; stepIndex: number }> = {
   filed: {
     label: 'Filed',
-    color: '#F59E0B',
-    badgeClass: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300 border-amber-200 dark:border-amber-800',
+    color: '#64748B',
+    badgeClass: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300 border-slate-200 dark:border-slate-700',
     stepIndex: 1,
   },
   acknowledged: {
     label: 'Acknowledged',
-    color: '#3B82F6',
-    badgeClass: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 border-blue-200 dark:border-blue-800',
+    color: '#2563EB',
+    badgeClass: 'bg-blue-50 text-blue-800 dark:bg-blue-950/40 dark:text-blue-300 border-blue-200 dark:border-blue-800',
     stepIndex: 2,
   },
   in_progress: {
     label: 'In Progress',
-    color: '#8B5CF6',
-    badgeClass: 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300 border-purple-200 dark:border-purple-800',
+    color: '#B7791F',
+    badgeClass: 'bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 border-amber-200 dark:border-amber-800',
     stepIndex: 3,
   },
   resolved: {
     label: 'Resolved',
-    color: '#10B981',
-    badgeClass: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
+    color: '#23845B',
+    badgeClass: 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
     stepIndex: 4,
   },
   rejected: {
     label: 'Rejected',
-    color: '#EF4444',
-    badgeClass: 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300 border-rose-200 dark:border-rose-800',
+    color: '#C34B4B',
+    badgeClass: 'bg-rose-50 text-rose-800 dark:bg-rose-950/40 dark:text-rose-300 border-rose-200 dark:border-rose-800',
     stepIndex: 0,
   },
 };
