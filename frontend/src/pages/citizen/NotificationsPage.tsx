@@ -3,16 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useNotifications } from '../../contexts/NotificationContext';
 import { NotificationType } from '../../types';
 import Button from '../../components/ui/Button';
-import Card, { CardHeader, CardContent } from '../../components/ui/Card';
+import Card from '../../components/ui/Card';
 import {
   Bell,
   CheckCheck,
-  Cpu,
   UserCheck,
   Clock,
   CheckCircle2,
-  Filter,
   FileText,
+  Bot,
 } from 'lucide-react';
 
 export const NotificationsPage: React.FC = () => {
@@ -28,15 +27,15 @@ export const NotificationsPage: React.FC = () => {
   const getNotificationIcon = (type: NotificationType) => {
     switch (type) {
       case 'complaint_received':
-        return <FileText className="w-4 h-4 text-amber-500" />;
+        return <FileText className="w-4 h-4 text-[#66736F]" />;
       case 'ai_triage_completed':
-        return <Cpu className="w-4 h-4 text-teal" />;
+        return <Bot className="w-4 h-4 text-[#183B3A] dark:text-[#3B8278]" />;
       case 'staff_assigned':
-        return <UserCheck className="w-4 h-4 text-blue-500" />;
+        return <UserCheck className="w-4 h-4 text-[#2563EB]" />;
       case 'complaint_status_changed':
-        return <Clock className="w-4 h-4 text-purple-500" />;
+        return <Clock className="w-4 h-4 text-[#B7791F]" />;
       case 'complaint_resolved':
-        return <CheckCircle2 className="w-4 h-4 text-emerald-500" />;
+        return <CheckCircle2 className="w-4 h-4 text-[#23845B]" />;
     }
   };
 
@@ -50,14 +49,17 @@ export const NotificationsPage: React.FC = () => {
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#E5E8E4] dark:border-[#22344D]">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <Bell className="w-6 h-6 text-civic" />
-            Notification Center
+          <div className="text-[11px] font-bold uppercase tracking-wider text-[#66736F] dark:text-slate-400 mb-0.5">
+            Communications Desk
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold text-[#202B2A] dark:text-white flex items-center gap-2">
+            <Bell className="w-5 h-5 text-[#183B3A] dark:text-[#3B8278]" />
+            Municipal Notification Center
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Real-time notifications for automated AI triage, crew dispatches, and status updates.
+          <p className="text-xs text-[#66736F] dark:text-slate-400 mt-0.5">
+            Real-time status updates, engineering team assignments, and resolution audits.
           </p>
         </div>
 
@@ -68,20 +70,20 @@ export const NotificationsPage: React.FC = () => {
             onClick={markAllAsRead}
             leftIcon={<CheckCheck className="w-4 h-4" />}
           >
-            Mark All as Read ({unreadCount})
+            Mark All Read ({unreadCount})
           </Button>
         )}
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
         <button
           type="button"
           onClick={() => setFilterType('all')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
+          className={`px-3 py-1.5 rounded-md text-xs font-semibold whitespace-nowrap transition-colors ${
             filterType === 'all'
-              ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
-              : 'bg-white dark:bg-[#131E30] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800'
+              ? 'bg-[#183B3A] text-white dark:bg-[#2563EB]'
+              : 'bg-white dark:bg-[#131E30] text-[#66736F] dark:text-slate-300 border border-[#E5E8E4] dark:border-[#22344D] hover:bg-[#FAFAF7]'
           }`}
         >
           All ({notifications.length})
@@ -90,22 +92,22 @@ export const NotificationsPage: React.FC = () => {
         <button
           type="button"
           onClick={() => setFilterType('ai_triage_completed')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
+          className={`px-3 py-1.5 rounded-md text-xs font-semibold whitespace-nowrap transition-colors ${
             filterType === 'ai_triage_completed'
-              ? 'bg-civic text-white'
-              : 'bg-white dark:bg-[#131E30] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800'
+              ? 'bg-[#183B3A] text-white dark:bg-[#2563EB]'
+              : 'bg-white dark:bg-[#131E30] text-[#66736F] dark:text-slate-300 border border-[#E5E8E4] dark:border-[#22344D] hover:bg-[#FAFAF7]'
           }`}
         >
-          AI Triage
+          Triage Complete
         </button>
 
         <button
           type="button"
           onClick={() => setFilterType('staff_assigned')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
+          className={`px-3 py-1.5 rounded-md text-xs font-semibold whitespace-nowrap transition-colors ${
             filterType === 'staff_assigned'
-              ? 'bg-civic text-white'
-              : 'bg-white dark:bg-[#131E30] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800'
+              ? 'bg-[#183B3A] text-white dark:bg-[#2563EB]'
+              : 'bg-white dark:bg-[#131E30] text-[#66736F] dark:text-slate-300 border border-[#E5E8E4] dark:border-[#22344D] hover:bg-[#FAFAF7]'
           }`}
         >
           Staff Assigned
@@ -114,22 +116,22 @@ export const NotificationsPage: React.FC = () => {
         <button
           type="button"
           onClick={() => setFilterType('complaint_status_changed')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
+          className={`px-3 py-1.5 rounded-md text-xs font-semibold whitespace-nowrap transition-colors ${
             filterType === 'complaint_status_changed'
-              ? 'bg-civic text-white'
-              : 'bg-white dark:bg-[#131E30] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800'
+              ? 'bg-[#183B3A] text-white dark:bg-[#2563EB]'
+              : 'bg-white dark:bg-[#131E30] text-[#66736F] dark:text-slate-300 border border-[#E5E8E4] dark:border-[#22344D] hover:bg-[#FAFAF7]'
           }`}
         >
-          Status Changes
+          Status Updates
         </button>
 
         <button
           type="button"
           onClick={() => setFilterType('complaint_resolved')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
+          className={`px-3 py-1.5 rounded-md text-xs font-semibold whitespace-nowrap transition-colors ${
             filterType === 'complaint_resolved'
-              ? 'bg-civic text-white'
-              : 'bg-white dark:bg-[#131E30] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800'
+              ? 'bg-[#183B3A] text-white dark:bg-[#2563EB]'
+              : 'bg-white dark:bg-[#131E30] text-[#66736F] dark:text-slate-300 border border-[#E5E8E4] dark:border-[#22344D] hover:bg-[#FAFAF7]'
           }`}
         >
           Resolved
@@ -138,42 +140,42 @@ export const NotificationsPage: React.FC = () => {
 
       {/* Notifications List */}
       <Card>
-        <div className="divide-y divide-slate-100 dark:divide-[#22344D]">
+        <div className="divide-y divide-[#E5E8E4] dark:divide-[#22344D]">
           {filteredNotifications.length > 0 ? (
             filteredNotifications.map((notif) => (
               <div
                 key={notif.id}
                 onClick={() => handleNotificationClick(notif.id, notif.complaintId)}
-                className={`p-4 sm:p-5 flex items-start justify-between gap-4 transition-colors cursor-pointer ${
+                className={`p-4 sm:p-4.5 flex items-start justify-between gap-4 transition-colors cursor-pointer ${
                   !notif.read
-                    ? 'bg-blue-50/40 dark:bg-blue-950/20 hover:bg-blue-50/70 dark:hover:bg-blue-950/30'
-                    : 'hover:bg-slate-50 dark:hover:bg-slate-800/40'
+                    ? 'bg-blue-50/30 dark:bg-blue-950/20 hover:bg-blue-50/50'
+                    : 'hover:bg-[#FAFAF7] dark:hover:bg-[#111A29]'
                 }`}
               >
                 <div className="flex items-start gap-3.5 flex-1">
-                  <div className="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-8 h-8 rounded-md bg-[#FAFAF7] dark:bg-[#0E1624] border border-[#E5E8E4] dark:border-[#22344D] flex items-center justify-center flex-shrink-0 mt-0.5">
                     {getNotificationIcon(notif.type)}
                   </div>
 
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+                      <h4 className="text-xs font-bold text-[#202B2A] dark:text-white">
                         {notif.title}
                       </h4>
                       {!notif.read && (
-                        <span className="w-2 h-2 rounded-full bg-civic" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#2563EB]" />
                       )}
                     </div>
 
-                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p className="text-xs text-[#66736F] dark:text-slate-400 leading-relaxed">
                       {notif.message}
                     </p>
 
-                    <div className="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
-                      <span>{new Date(notif.createdAt).toLocaleString()}</span>
+                    <div className="flex items-center gap-3 text-[11px] text-[#66736F] dark:text-slate-400 pt-1">
+                      <span className="tabular-nums">{new Date(notif.createdAt).toLocaleString()}</span>
                       {notif.complaintId && (
-                        <span className="font-mono text-civic font-semibold">
-                          View #{notif.complaintId}
+                        <span className="font-mono text-[#2563EB] font-semibold hover:underline">
+                          Case #{notif.complaintId}
                         </span>
                       )}
                     </div>
@@ -182,10 +184,10 @@ export const NotificationsPage: React.FC = () => {
               </div>
             ))
           ) : (
-            <div className="p-12 text-center text-slate-400">
-              <Bell className="w-10 h-10 mx-auto text-slate-300 dark:text-slate-700 mb-2" />
-              <p className="text-sm font-semibold text-slate-600 dark:text-slate-400">
-                No notifications in this category
+            <div className="p-12 text-center text-[#66736F]">
+              <Bell className="w-8 h-8 mx-auto text-[#66736F]/50 mb-2" />
+              <p className="text-xs font-semibold">
+                No notifications in this category.
               </p>
             </div>
           )}
