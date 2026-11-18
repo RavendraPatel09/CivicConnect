@@ -30,7 +30,7 @@ export const ResetPasswordPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B1320] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
+    <div className="min-h-screen bg-[#FAFAF7] dark:bg-[#0B1320] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative text-[#202B2A] dark:text-[#F1F5F9]">
       <div className="absolute top-6 right-6">
         <ThemeToggle />
       </div>
@@ -39,25 +39,25 @@ export const ResetPasswordPage: React.FC = () => {
         <Link to="/" className="inline-block">
           <Logo size="lg" />
         </Link>
-        <h2 className="mt-6 text-2xl font-bold tracking-tight text-[#142B45] dark:text-white">
-          Create new password
+        <h2 className="mt-6 text-xl sm:text-2xl font-bold tracking-tight text-[#202B2A] dark:text-white">
+          Create New Password
         </h2>
-        <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+        <p className="mt-1.5 text-xs text-[#66736F] dark:text-slate-400">
           Your new password must be distinct from previously used credentials.
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white dark:bg-[#131E30] py-8 px-6 shadow-sm rounded-2xl border border-slate-200/90 dark:border-[#22344D] sm:px-10">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
+        <div className="bg-white dark:bg-[#131E30] py-8 px-6 shadow-subtle rounded-lg border border-[#E5E8E4] dark:border-[#22344D] sm:px-10">
           {isSuccess ? (
             <div className="text-center py-4 space-y-3">
-              <div className="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-[#23845B] mx-auto flex items-center justify-center border border-emerald-200 dark:border-emerald-800">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white">
+              <h3 className="text-base font-bold text-[#202B2A] dark:text-white">
                 Password Successfully Updated
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-[#66736F] dark:text-slate-400">
                 Redirecting you to sign in...
               </p>
             </div>
@@ -83,7 +83,7 @@ export const ResetPasswordPage: React.FC = () => {
 
               <Button
                 type="submit"
-                variant="civic"
+                variant="primary"
                 size="md"
                 className="w-full mt-2"
                 isLoading={isSubmitting}
