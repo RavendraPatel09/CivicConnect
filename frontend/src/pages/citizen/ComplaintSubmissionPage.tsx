@@ -21,8 +21,7 @@ import {
   ArrowLeft,
   Upload,
   X,
-  AlertCircle,
-  Sparkles,
+  ShieldCheck,
 } from 'lucide-react';
 
 export const ComplaintSubmissionPage: React.FC = () => {
@@ -84,7 +83,6 @@ export const ComplaintSubmissionPage: React.FC = () => {
   const handleMapLocationSelected = (lat: number, lng: number) => {
     setValue('lat', lat);
     setValue('lng', lng);
-    // Reverse geocode mockup update
     setValue('address', `Location at ${lat.toFixed(4)}, ${lng.toFixed(4)} (Selected on map)`);
   };
 
@@ -123,57 +121,57 @@ export const ComplaintSubmissionPage: React.FC = () => {
   };
 
   const steps = [
-    { number: 1, title: 'Issue Details', icon: <FileText className="w-4 h-4" /> },
-    { number: 2, title: 'Location Pin', icon: <MapPin className="w-4 h-4" /> },
-    { number: 3, title: 'Photo Evidence', icon: <Camera className="w-4 h-4" /> },
-    { number: 4, title: 'Review & Submit', icon: <CheckCircle2 className="w-4 h-4" /> },
+    { number: 1, title: 'Details', icon: <FileText className="w-3.5 h-3.5" /> },
+    { number: 2, title: 'Location', icon: <MapPin className="w-3.5 h-3.5" /> },
+    { number: 3, title: 'Evidence', icon: <Camera className="w-3.5 h-3.5" /> },
+    { number: 4, title: 'Review', icon: <CheckCircle2 className="w-3.5 h-3.5" /> },
   ];
 
   if (submittedTicketId) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-[#0B1320] flex flex-col justify-center items-center py-12 px-4 sm:px-6">
-        <div className="max-w-md w-full bg-white dark:bg-[#131E30] rounded-2xl p-8 border border-slate-200/90 dark:border-[#22344D] shadow-xl text-center space-y-5">
-          <div className="w-16 h-16 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center">
-            <CheckCircle2 className="w-9 h-9" />
+      <div className="min-h-screen bg-[#FAFAF7] dark:bg-[#0B1320] flex flex-col justify-center items-center py-12 px-4 sm:px-6 text-[#202B2A] dark:text-[#F1F5F9]">
+        <div className="max-w-md w-full bg-white dark:bg-[#131E30] rounded-lg p-8 border border-[#E5E8E4] dark:border-[#22344D] shadow-subtle text-center space-y-5">
+          <div className="w-14 h-14 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-[#23845B] mx-auto flex items-center justify-center border border-emerald-200 dark:border-emerald-800">
+            <CheckCircle2 className="w-7 h-7" />
           </div>
 
           <div>
-            <span className="text-xs font-mono font-bold text-slate-400">
-              Complaint Registered
+            <span className="text-[11px] font-mono font-bold text-[#66736F] dark:text-slate-400 uppercase tracking-wider">
+              Incident Registered
             </span>
-            <h2 className="text-2xl font-black text-slate-900 dark:text-white mt-1">
+            <h2 className="text-2xl font-bold font-mono text-[#183B3A] dark:text-[#3B8278] mt-1">
               {submittedTicketId}
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-              Your grievance has been successfully logged and processed by AI Triage. Municipal teams have been assigned.
+            <p className="text-xs text-[#66736F] dark:text-slate-400 mt-2 leading-relaxed">
+              Your grievance has been successfully entered into the municipal work registry. Algorithmic intake analysis has routed this case to the responsible department.
             </p>
           </div>
 
-          <div className="bg-slate-50 dark:bg-[#0E1726] p-4 rounded-xl border border-slate-200/60 dark:border-slate-800 text-left text-xs space-y-2">
+          <div className="bg-[#FAFAF7] dark:bg-[#0E1624] p-4 rounded-md border border-[#E5E8E4] dark:border-[#22344D] text-left text-xs space-y-2">
             <div className="flex justify-between">
-              <span className="text-slate-500">Status:</span>
-              <span className="font-semibold text-blue-600">Acknowledged</span>
+              <span className="text-[#66736F] dark:text-slate-400">Current Status:</span>
+              <span className="font-semibold text-[#2563EB]">Acknowledged</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Assigned Department:</span>
-              <span className="font-semibold text-slate-800 dark:text-slate-200">
+              <span className="text-[#66736F] dark:text-slate-400">Assigned Department:</span>
+              <span className="font-semibold text-[#202B2A] dark:text-white">
                 {CATEGORIES[formValues.category]?.department}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">AI Priority Score:</span>
-              <span className="font-bold text-teal">High Priority (88/100)</span>
+              <span className="text-[#66736F] dark:text-slate-400">Assessed Priority:</span>
+              <span className="font-bold tabular-nums text-[#183B3A] dark:text-[#3B8278]">Score 88 / 100</span>
             </div>
           </div>
 
-          <div className="pt-2 flex flex-col sm:flex-row gap-3">
+          <div className="pt-2 flex flex-col sm:flex-row gap-2.5">
             <Button
-              variant="civic"
+              variant="primary"
               size="md"
               className="w-full"
               onClick={() => navigate(`/tickets/${submittedTicketId}`)}
             >
-              View Complaint Details
+              View Case Record
             </Button>
             <Button
               variant="outline"
@@ -181,7 +179,7 @@ export const ComplaintSubmissionPage: React.FC = () => {
               className="w-full"
               onClick={() => navigate('/citizen')}
             >
-              Return to Dashboard
+              Citizen Portal
             </Button>
           </div>
         </div>
@@ -190,9 +188,9 @@ export const ComplaintSubmissionPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B1320] text-slate-900 dark:text-white flex flex-col">
+    <div className="min-h-screen bg-[#FAFAF7] dark:bg-[#0B1320] text-[#202B2A] dark:text-[#F1F5F9] flex flex-col">
       {/* Header */}
-      <header className="h-16 border-b border-slate-200/90 dark:border-[#22344D] bg-white dark:bg-[#131E30] px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30">
+      <header className="h-16 border-b border-[#E5E8E4] dark:border-[#22344D] bg-white dark:bg-[#131E30] px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30">
         <Link to="/" className="flex items-center">
           <Logo size="md" />
         </Link>
@@ -200,7 +198,7 @@ export const ComplaintSubmissionPage: React.FC = () => {
           <ThemeToggle />
           <Link
             to="/citizen"
-            className="text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900"
+            className="text-xs font-semibold text-[#66736F] hover:text-[#202B2A] dark:hover:text-white"
           >
             Cancel
           </Link>
@@ -212,7 +210,7 @@ export const ComplaintSubmissionPage: React.FC = () => {
         {/* Step Progress Indicators */}
         <div className="mb-8">
           <div className="flex items-center justify-between relative">
-            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-slate-200 dark:bg-slate-700 -translate-y-1/2 z-0" />
+            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#E5E8E4] dark:bg-[#22344D] -translate-y-1/2 z-0" />
             {steps.map((st) => {
               const isComplete = currentStep > st.number;
               const isCurrent = currentStep === st.number;
@@ -220,19 +218,19 @@ export const ComplaintSubmissionPage: React.FC = () => {
               return (
                 <div key={st.number} className="relative z-10 flex flex-col items-center">
                   <div
-                    className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                       isComplete
-                        ? 'bg-emerald-500 text-white shadow-xs'
+                        ? 'bg-[#183B3A] text-white dark:bg-[#2563EB]'
                         : isCurrent
-                        ? 'bg-civic text-white ring-4 ring-blue-100 dark:ring-blue-950/60 shadow-xs'
-                        : 'bg-white dark:bg-[#131E30] text-slate-400 border border-slate-300 dark:border-slate-700'
+                        ? 'bg-[#183B3A] text-white dark:bg-[#2563EB] ring-4 ring-[#183B3A]/10 dark:ring-white/10'
+                        : 'bg-white dark:bg-[#131E30] text-[#66736F] border border-[#E5E8E4] dark:border-[#22344D]'
                     }`}
                   >
                     {isComplete ? <CheckCircle2 className="w-4 h-4" /> : st.number}
                   </div>
                   <span
-                    className={`text-[11px] font-semibold mt-1.5 hidden sm:block ${
-                      isCurrent ? 'text-civic' : 'text-slate-500 dark:text-slate-400'
+                    className={`text-[11px] font-medium mt-1.5 hidden sm:block ${
+                      isCurrent ? 'font-bold text-[#183B3A] dark:text-white' : 'text-[#66736F] dark:text-slate-400'
                     }`}
                   >
                     {st.title}
@@ -243,18 +241,18 @@ export const ComplaintSubmissionPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Form Form Card */}
-        <div className="bg-white dark:bg-[#131E30] rounded-2xl border border-slate-200/90 dark:border-[#22344D] p-6 sm:p-8 shadow-sm">
+        {/* Form Card */}
+        <div className="bg-white dark:bg-[#131E30] rounded-lg border border-[#E5E8E4] dark:border-[#22344D] p-6 sm:p-8 shadow-subtle">
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* STEP 1: ISSUE DETAILS */}
             {currentStep === 1 && (
-              <div className="space-y-5 animate-fadeIn">
-                <div>
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              <div className="space-y-5">
+                <div className="pb-3 border-b border-[#E5E8E4] dark:border-[#22344D]">
+                  <h2 className="text-lg font-bold text-[#202B2A] dark:text-white">
                     Step 1: Incident Information
                   </h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    Clearly describe the civic infrastructure defect so crews can bring the right tools.
+                  <p className="text-xs text-[#66736F] dark:text-slate-400 mt-0.5">
+                    Describe the civic infrastructure defect to inform field team assignment.
                   </p>
                 </div>
 
@@ -267,10 +265,10 @@ export const ComplaintSubmissionPage: React.FC = () => {
 
                 {/* Category Selection */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-2">
+                  <label className="block text-xs font-semibold text-[#202B2A] dark:text-slate-200 mb-2">
                     Civic Category
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                     {(Object.keys(CATEGORIES) as ComplaintCategory[]).map((catKey) => {
                       const cat = CATEGORIES[catKey];
                       const isSelected = formValues.category === catKey;
@@ -280,14 +278,14 @@ export const ComplaintSubmissionPage: React.FC = () => {
                           key={catKey}
                           type="button"
                           onClick={() => setValue('category', catKey)}
-                          className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                          className={`p-3 rounded-lg border text-left transition-all cursor-pointer ${
                             isSelected
-                              ? 'border-civic bg-blue-50/50 dark:bg-blue-950/30 text-civic ring-1 ring-civic font-bold'
-                              : 'border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300'
+                              ? 'border-[#183B3A] bg-[#183B3A]/5 text-[#183B3A] dark:border-white dark:bg-white/10 dark:text-white font-semibold'
+                              : 'border-[#E5E8E4] dark:border-[#22344D] hover:bg-[#FAFAF7] dark:hover:bg-[#111A29] text-[#202B2A] dark:text-slate-300'
                           }`}
                         >
                           <div className="text-xs font-semibold">{cat.name}</div>
-                          <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                          <div className="text-[10px] text-[#66736F] dark:text-slate-400 truncate mt-0.5">
                             {cat.department}
                           </div>
                         </button>
@@ -301,10 +299,10 @@ export const ComplaintSubmissionPage: React.FC = () => {
 
                 {/* Severity Selection */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-2">
+                  <label className="block text-xs font-semibold text-[#202B2A] dark:text-slate-200 mb-2">
                     Estimated Public Hazard Severity
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {(['low', 'medium', 'high', 'critical'] as ComplaintSeverity[]).map((sev) => {
                       const isSelected = formValues.severity === sev;
                       return (
@@ -312,10 +310,10 @@ export const ComplaintSubmissionPage: React.FC = () => {
                           key={sev}
                           type="button"
                           onClick={() => setValue('severity', sev)}
-                          className={`py-2 px-3 rounded-lg border text-xs font-semibold capitalize text-center transition-all ${
+                          className={`py-2 px-3 rounded-md border text-xs font-semibold capitalize text-center transition-all ${
                             isSelected
-                              ? 'border-civic bg-civic text-white'
-                              : 'border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
+                              ? 'border-[#183B3A] bg-[#183B3A] text-white dark:border-[#2563EB] dark:bg-[#2563EB]'
+                              : 'border-[#E5E8E4] dark:border-[#22344D] hover:bg-[#FAFAF7] dark:hover:bg-[#111A29] text-[#202B2A] dark:text-slate-300'
                           }`}
                         >
                           {sev}
@@ -340,13 +338,13 @@ export const ComplaintSubmissionPage: React.FC = () => {
 
             {/* STEP 2: LOCATION */}
             {currentStep === 2 && (
-              <div className="space-y-5 animate-fadeIn">
-                <div>
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              <div className="space-y-5">
+                <div className="pb-3 border-b border-[#E5E8E4] dark:border-[#22344D]">
+                  <h2 className="text-lg font-bold text-[#202B2A] dark:text-white">
                     Step 2: Incident Geolocation
                   </h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    Click the map to drop a pin or adjust the street address for field dispatch.
+                  <p className="text-xs text-[#66736F] dark:text-slate-400 mt-0.5">
+                    Click the map to drop a pin or enter the street address for field dispatch.
                   </p>
                 </div>
 
@@ -365,22 +363,23 @@ export const ComplaintSubmissionPage: React.FC = () => {
                 />
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1.5">
-                    Click to Pin Location On Map
+                  <label className="block text-xs font-semibold text-[#202B2A] dark:text-slate-200 mb-1.5">
+                    Incident Map Location
                   </label>
-                  <CivicMap
-                    complaints={[]}
-                    height="320px"
-                    center={[formValues.lat || 37.7749, formValues.lng || -122.4194]}
-                    selectableLocation={true}
-                    onLocationSelected={handleMapLocationSelected}
-                  />
-                  <div className="mt-2 text-[11px] text-slate-500 flex items-center justify-between">
-                    <span>
-                      Selected Coordinates: {formValues.lat?.toFixed(5)},{' '}
-                      {formValues.lng?.toFixed(5)}
+                  <div className="rounded-lg overflow-hidden border border-[#E5E8E4] dark:border-[#22344D]">
+                    <CivicMap
+                      complaints={[]}
+                      height="320px"
+                      center={[formValues.lat || 37.7749, formValues.lng || -122.4194]}
+                      selectableLocation={true}
+                      onLocationSelected={handleMapLocationSelected}
+                    />
+                  </div>
+                  <div className="mt-2 text-[11px] text-[#66736F] flex items-center justify-between">
+                    <span className="tabular-nums">
+                      Selected: {formValues.lat?.toFixed(5)}, {formValues.lng?.toFixed(5)}
                     </span>
-                    <span className="text-civic font-medium">Click map to relocate pin</span>
+                    <span className="text-[#2563EB] font-medium">Click map to adjust pin position</span>
                   </div>
                 </div>
               </div>
@@ -388,45 +387,45 @@ export const ComplaintSubmissionPage: React.FC = () => {
 
             {/* STEP 3: PHOTO EVIDENCE */}
             {currentStep === 3 && (
-              <div className="space-y-5 animate-fadeIn">
-                <div>
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-                    Step 3: Photographic Evidence
+              <div className="space-y-5">
+                <div className="pb-3 border-b border-[#E5E8E4] dark:border-[#22344D]">
+                  <h2 className="text-lg font-bold text-[#202B2A] dark:text-white">
+                    Step 3: Photographic Documentation
                   </h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    Visual proof allows AI classification and crew work orders to estimate materials accurately.
+                  <p className="text-xs text-[#66736F] dark:text-slate-400 mt-0.5">
+                    Visual evidence assists automated classification and helps municipal crews prepare appropriate repair equipment.
                   </p>
                 </div>
 
                 {/* Upload Zone */}
-                <label className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-civic hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-colors">
+                <label className="border-2 border-dashed border-[#E5E8E4] dark:border-[#22344D] rounded-lg p-8 flex flex-col items-center justify-center cursor-pointer hover:border-[#183B3A] dark:hover:border-slate-500 transition-colors bg-[#FAFAF7] dark:bg-[#111A29]">
                   <input
                     type="file"
                     accept="image/*"
                     onChange={handleSimulatedImageUpload}
                     className="sr-only"
                   />
-                  <div className="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-950/50 text-civic flex items-center justify-center mb-3">
-                    <Upload className="w-6 h-6" />
+                  <div className="w-10 h-10 rounded-md bg-white dark:bg-[#131E30] border border-[#E5E8E4] dark:border-[#22344D] text-[#183B3A] dark:text-white flex items-center justify-center mb-2">
+                    <Upload className="w-5 h-5" />
                   </div>
-                  <span className="text-sm font-semibold text-slate-900 dark:text-white">
-                    Click to upload photo evidence
+                  <span className="text-xs font-semibold text-[#202B2A] dark:text-white">
+                    Click to attach photo evidence
                   </span>
-                  <span className="text-xs text-slate-400 mt-1">
+                  <span className="text-[11px] text-[#66736F] dark:text-slate-400 mt-0.5">
                     PNG, JPG, or WEBP up to 10MB
                   </span>
                 </label>
 
                 {/* Uploaded Thumbnails Preview */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-2">
-                    Attached Photographs ({uploadedImages.length})
+                  <label className="block text-xs font-semibold text-[#202B2A] dark:text-slate-200 mb-2">
+                    Attached Images ({uploadedImages.length})
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                     {uploadedImages.map((img, idx) => (
                       <div
                         key={idx}
-                        className="relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 group h-32"
+                        className="relative rounded-lg overflow-hidden border border-[#E5E8E4] dark:border-[#22344D] group h-28"
                       >
                         <img
                           src={img}
@@ -436,9 +435,9 @@ export const ComplaintSubmissionPage: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handleRemoveImage(idx)}
-                          className="absolute top-2 right-2 p-1 rounded-full bg-slate-900/70 text-white hover:bg-rose-600 transition-colors"
+                          className="absolute top-1.5 right-1.5 p-1 rounded-md bg-black/60 text-white hover:bg-rose-600 transition-colors"
                         >
-                          <X className="w-4 h-4" />
+                          <X className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     ))}
@@ -452,67 +451,67 @@ export const ComplaintSubmissionPage: React.FC = () => {
 
             {/* STEP 4: REVIEW & SUBMIT */}
             {currentStep === 4 && (
-              <div className="space-y-6 animate-fadeIn">
-                <div>
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              <div className="space-y-5">
+                <div className="pb-3 border-b border-[#E5E8E4] dark:border-[#22344D]">
+                  <h2 className="text-lg font-bold text-[#202B2A] dark:text-white">
                     Step 4: Final Verification
                   </h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                    Review your grievance details before publishing to the municipal intake registry.
+                  <p className="text-xs text-[#66736F] dark:text-slate-400 mt-0.5">
+                    Review grievance details before logging to the municipal intake registry.
                   </p>
                 </div>
 
-                <div className="bg-slate-50 dark:bg-[#0E1726] p-5 rounded-xl border border-slate-200/80 dark:border-slate-800 space-y-4">
-                  <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800 pb-3">
-                    <span className="text-xs font-semibold text-slate-500">Incident Category</span>
-                    <span className="text-xs font-bold text-civic">
+                <div className="bg-[#FAFAF7] dark:bg-[#0E1624] p-4.5 rounded-lg border border-[#E5E8E4] dark:border-[#22344D] space-y-3">
+                  <div className="flex items-center justify-between border-b border-[#E5E8E4] dark:border-[#22344D] pb-2.5">
+                    <span className="text-xs text-[#66736F] dark:text-slate-400">Incident Category</span>
+                    <span className="text-xs font-bold text-[#183B3A] dark:text-white">
                       {CATEGORIES[formValues.category]?.name}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800 pb-3">
-                    <span className="text-xs font-semibold text-slate-500">Assigned Municipal Dept</span>
-                    <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+                  <div className="flex items-center justify-between border-b border-[#E5E8E4] dark:border-[#22344D] pb-2.5">
+                    <span className="text-xs text-[#66736F] dark:text-slate-400">Assigned Department</span>
+                    <span className="text-xs font-semibold text-[#202B2A] dark:text-white">
                       {CATEGORIES[formValues.category]?.department}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800 pb-3">
-                    <span className="text-xs font-semibold text-slate-500">Hazard Severity</span>
-                    <span className="text-xs font-bold uppercase text-amber-600">
+                  <div className="flex items-center justify-between border-b border-[#E5E8E4] dark:border-[#22344D] pb-2.5">
+                    <span className="text-xs text-[#66736F] dark:text-slate-400">Hazard Severity</span>
+                    <span className="text-xs font-bold uppercase text-[#202B2A] dark:text-white">
                       {formValues.severity}
                     </span>
                   </div>
 
-                  <div className="space-y-1 border-b border-slate-200/60 dark:border-slate-800 pb-3">
-                    <span className="text-xs font-semibold text-slate-500">Title & Location</span>
-                    <p className="text-sm font-bold text-slate-900 dark:text-white">
+                  <div className="space-y-1 border-b border-[#E5E8E4] dark:border-[#22344D] pb-2.5">
+                    <span className="text-xs text-[#66736F] dark:text-slate-400">Title & Location</span>
+                    <p className="text-xs font-bold text-[#202B2A] dark:text-white">
                       {formValues.title}
                     </p>
-                    <p className="text-xs text-slate-600 dark:text-slate-400">
+                    <p className="text-xs text-[#66736F] dark:text-slate-400">
                       {formValues.address} {formValues.landmark ? `(${formValues.landmark})` : ''}
                     </p>
                   </div>
 
                   <div className="space-y-1">
-                    <span className="text-xs font-semibold text-slate-500">Description</span>
-                    <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                    <span className="text-xs text-[#66736F] dark:text-slate-400">Description</span>
+                    <p className="text-xs text-[#202B2A] dark:text-slate-300 leading-relaxed">
                       {formValues.description}
                     </p>
                   </div>
                 </div>
 
-                <div className="p-3.5 bg-teal-50 dark:bg-teal-950/30 rounded-xl border border-teal-200 dark:border-teal-800 flex items-center gap-2.5 text-xs text-teal-800 dark:text-teal-200">
-                  <Sparkles className="w-4 h-4 text-teal-600 flex-shrink-0" />
+                <div className="p-3 bg-[#FAFAF7] dark:bg-[#0E1624] rounded-lg border border-[#E5E8E4] dark:border-[#22344D] flex items-center gap-2.5 text-xs text-[#66736F] dark:text-slate-400">
+                  <ShieldCheck className="w-4 h-4 text-[#2563EB] flex-shrink-0" />
                   <span>
-                    Submitting this form triggers automated AI semantic classification and generates a unique tracking token for municipal audit.
+                    Submitting logs this incident to the public municipal ledger and dispatches automated intake triage to the designated engineering team.
                   </span>
                 </div>
               </div>
             )}
 
             {/* Stepper Navigation Buttons */}
-            <div className="mt-8 pt-5 border-t border-slate-200/80 dark:border-[#22344D] flex items-center justify-between">
+            <div className="mt-8 pt-5 border-t border-[#E5E8E4] dark:border-[#22344D] flex items-center justify-between">
               {currentStep > 1 ? (
                 <Button
                   type="button"
@@ -530,7 +529,7 @@ export const ComplaintSubmissionPage: React.FC = () => {
               {currentStep < 4 ? (
                 <Button
                   type="button"
-                  variant="civic"
+                  variant="primary"
                   size="md"
                   onClick={handleNextStep}
                   rightIcon={<ArrowRight className="w-4 h-4" />}
@@ -540,7 +539,7 @@ export const ComplaintSubmissionPage: React.FC = () => {
               ) : (
                 <Button
                   type="submit"
-                  variant="civic"
+                  variant="primary"
                   size="md"
                   isLoading={isSubmitting}
                   rightIcon={<CheckCircle2 className="w-4 h-4" />}
