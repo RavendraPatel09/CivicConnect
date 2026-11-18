@@ -14,7 +14,7 @@ export const LandingPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F6F8FA] dark:bg-[#0B1320] text-[#172B3A] dark:text-[#F1F5F9]">
+    <div className="min-h-screen flex flex-col bg-[#FAFAF7] dark:bg-[#0B1320] text-[#202B2A] dark:text-[#F1F5F9]">
       <PublicNavbar />
       <main className="flex-grow">
         <HeroSection />
