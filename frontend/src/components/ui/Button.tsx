@@ -21,7 +21,7 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyles =
-    'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none select-none cursor-pointer';
+    'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none select-none cursor-pointer';
 
   const sizeStyles = {
     sm: 'text-xs px-3 py-1.5 gap-1.5',
@@ -31,17 +31,17 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variantStyles = {
     primary:
-      'bg-[#142B45] text-white hover:bg-[#0E1E31] focus:ring-[#142B45] dark:bg-sky-600 dark:hover:bg-sky-500 dark:text-white',
+      'bg-[#183B3A] text-white hover:bg-[#122C2B] focus:ring-[#183B3A] dark:bg-[#2563EB] dark:hover:bg-[#1D4ED8] dark:text-white',
     civic:
-      'bg-[#2563EB] text-white hover:bg-[#1D4ED8] active:bg-[#1E40AF] focus:ring-[#2563EB] shadow-sm',
+      'bg-[#2563EB] text-white hover:bg-[#1D4ED8] active:bg-[#1E40AF] focus:ring-[#2563EB] shadow-xs',
     secondary:
-      'bg-slate-100 text-slate-800 hover:bg-slate-200 focus:ring-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700',
+      'bg-[#FFFFFF] text-[#202B2A] border border-[#E5E8E4] hover:bg-[#F4F5F0] focus:ring-slate-300 dark:bg-[#131E30] dark:text-[#F1F5F9] dark:border-[#22344D] dark:hover:bg-[#172438]',
     outline:
-      'border border-slate-300 text-slate-700 hover:bg-slate-50 focus:ring-slate-400 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800/60',
+      'border border-[#E5E8E4] text-[#202B2A] hover:bg-[#F4F5F0] focus:ring-slate-300 dark:border-[#22344D] dark:text-slate-200 dark:hover:bg-slate-800/60',
     ghost:
-      'text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:ring-slate-300 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800',
+      'text-[#66736F] hover:text-[#202B2A] hover:bg-slate-100/70 focus:ring-slate-300 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800',
     danger:
-      'bg-rose-600 text-white hover:bg-rose-700 focus:ring-rose-500 shadow-sm',
+      'bg-[#C34B4B] text-white hover:bg-[#A83838] focus:ring-rose-500 shadow-xs',
   };
 
   return (
