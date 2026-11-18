@@ -4,11 +4,11 @@
 
 @layer base {
   :root {
-    --color-bg-primary: #F6F8FA;
+    --color-bg-primary: #FAFAF7;
     --color-surface: #FFFFFF;
-    --color-text-main: #172B3A;
-    --color-text-muted: #64748B;
-    --color-border: #E2E8F0;
+    --color-text-main: #202B2A;
+    --color-text-muted: #66736F;
+    --color-border: #E5E8E4;
   }
 
   .dark {
@@ -30,6 +30,16 @@
     color: var(--color-text-main);
     overflow-x: hidden;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Tabular numbers for clean data alignment */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
 /* Custom subtle scrollbar */
@@ -43,12 +53,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.25);
+  background: rgba(102, 115, 111, 0.25);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.4);
+  background: rgba(102, 115, 111, 0.4);
 }
 
 .dark ::-webkit-scrollbar-thumb {
@@ -70,9 +80,16 @@
 
 .leaflet-popup-content-wrapper {
   padding: 0;
-  border-radius: 0.75rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(24, 59, 58, 0.1);
+  border: 1px solid #E5E8E4;
   overflow: hidden;
+}
+
+.dark .leaflet-popup-content-wrapper {
+  background: #131E30;
+  border-color: #22344D;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 .leaflet-popup-content {
@@ -82,17 +99,4 @@
 
 .leaflet-popup-tip-container {
   margin-top: -1px;
-}
-
-/* Grid pattern background utility */
-.bg-grid-pattern {
-  background-size: 24px 24px;
-  background-image: linear-gradient(to right, rgba(20, 43, 69, 0.04) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(20, 43, 69, 0.04) 1px, transparent 1px);
-}
-
-.dark .bg-grid-pattern {
-  background-size: 24px 24px;
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
