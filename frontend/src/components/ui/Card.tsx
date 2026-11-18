@@ -14,8 +14,8 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   return (
     <div
-      className={`bg-white dark:bg-[#131E30] rounded-xl border border-slate-200/80 dark:border-[#22344D] shadow-sm ${
-        hoverable ? 'hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-200' : ''
+      className={`bg-white dark:bg-[#131E30] rounded-lg border border-[#E5E8E4] dark:border-[#22344D] shadow-subtle ${
+        hoverable ? 'hover:shadow-elevated hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-150' : ''
       } ${className}`}
       {...props}
     >
@@ -30,10 +30,10 @@ export const CardHeader: React.FC<{
   action?: React.ReactNode;
   className?: string;
 }> = ({ title, subtitle, action, className = '' }) => (
-  <div className={`p-5 pb-4 border-b border-slate-100 dark:border-[#22344D] flex items-center justify-between gap-4 ${className}`}>
+  <div className={`p-5 pb-4 border-b border-[#E5E8E4] dark:border-[#22344D] flex items-center justify-between gap-4 ${className}`}>
     <div>
-      <h3 className="font-semibold text-slate-900 dark:text-white text-base tracking-tight">{title}</h3>
-      {subtitle && <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{subtitle}</p>}
+      <h3 className="font-bold text-[#183B3A] dark:text-white text-base tracking-tight font-heading">{title}</h3>
+      {subtitle && <p className="text-xs text-[#66736F] dark:text-slate-400 mt-0.5">{subtitle}</p>}
     </div>
     {action && <div className="flex-shrink-0">{action}</div>}
   </div>
@@ -48,7 +48,7 @@ export const CardFooter: React.FC<{ children: React.ReactNode; className?: strin
   children,
   className = '',
 }) => (
-  <div className={`p-4 bg-slate-50/50 dark:bg-[#111A29]/50 border-t border-slate-100 dark:border-[#22344D] rounded-b-xl flex items-center justify-between ${className}`}>
+  <div className={`p-4 bg-[#FAFAF7] dark:bg-[#111A29] border-t border-[#E5E8E4] dark:border-[#22344D] rounded-b-lg flex items-center justify-between ${className}`}>
     {children}
   </div>
 );
